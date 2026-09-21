@@ -1,0 +1,13 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+.vscode/
+.idea/
+
+# Vercel
+.vercel/
+
+# Node (not used, but keeps stray installs out)
+node_modules/

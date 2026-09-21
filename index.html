@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="三年级位置与方向复习目录：位置小侦探（镜头找位置）与东南西北闯关，附「今天我学会了」自评清单。">
+<title>三年级 · 今天学了什么</title>
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Outfit:wght@600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#F4F8F6;
+    --surface:#FFFFFF;
+    --surface-2:#E9F1ED;
+    --ink:#13302A;
+    --ink-2:#4C6A61;
+    --ink-3:#7E968D;
+    --line:#D2E2DB;
+    --line-2:#BACFC6;
+    --teal:#218C7E;
+    --amber:#C97A0E;
+    --violet:#65529E;
+    --star:#D4881B;
+    --shadow:0 1px 0 rgba(19,48,42,.05), 0 14px 34px -20px rgba(19,48,42,.5);
+    --shadow-lg:0 2px 0 rgba(19,48,42,.05), 0 26px 60px -28px rgba(19,48,42,.6);
+    --r:18px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0C1815;
+      --surface:#14241F;
+      --surface-2:#1C2F29;
+      --ink:#E7F2EE;
+      --ink-2:#A0B9B0;
+      --ink-3:#7B948B;
+      --line:#274038;
+      --line-2:#355249;
+      --teal:#4FC6B3;
+      --amber:#EFAC4A;
+      --violet:#A18FDC;
+      --star:#EFAC4A;
+      --shadow:0 1px 0 rgba(0,0,0,.3), 0 14px 34px -20px rgba(0,0,0,.9);
+      --shadow-lg:0 2px 0 rgba(0,0,0,.35), 0 30px 64px -30px rgba(0,0,0,1);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0C1815;
+    --surface:#14241F;
+    --surface-2:#1C2F29;
+    --ink:#E7F2EE;
+    --ink-2:#A0B9B0;
+    --ink-3:#7B948B;
+    --line:#274038;
+    --line-2:#355249;
+    --teal:#4FC6B3;
+    --amber:#EFAC4A;
+    --violet:#A18FDC;
+    --star:#EFAC4A;
+    --shadow:0 1px 0 rgba(0,0,0,.3), 0 14px 34px -20px rgba(0,0,0,.9);
+    --shadow-lg:0 2px 0 rgba(0,0,0,.35), 0 30px 64px -30px rgba(0,0,0,1);
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:'Noto Sans SC',system-ui,-apple-system,'Segoe UI',sans-serif;
+    line-height:1.6;
+  }
+  .lat{font-family:'Outfit','Noto Sans SC',system-ui,sans-serif}
+  .wrap{max-width:1060px;margin:0 auto;padding:28px 16px 72px}
+
+  /* ---------- header ---------- */
+  .head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .eyebrow{
+    font-family:'Outfit',sans-serif;font-weight:700;letter-spacing:.14em;
+    text-transform:uppercase;font-size:12.5px;color:var(--teal);margin:0 0 6px;
+  }
+  h1{
+    margin:0;font-size:clamp(28px,5vw,46px);font-weight:900;line-height:1.2;
+    letter-spacing:-.01em;
+  }
+  .sub{margin:8px 0 0;color:var(--ink-2);font-size:clamp(15px,1.7vw,19px);max-width:56ch}
+  .theme-btn{
+    flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);
+    font-family:'Outfit',sans-serif;font-weight:700;font-size:13px;letter-spacing:.05em;
+    padding:8px 14px;border-radius:999px;cursor:pointer;
+  }
+  .theme-btn:hover{background:var(--surface-2);color:var(--ink)}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;gap:18px;margin-top:30px}
+  .card{
+    display:block;text-decoration:none;color:inherit;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:22px;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--line-2)}
+  .card:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+
+  /* featured */
+  .card.hero{
+    position:relative;overflow:hidden;padding:26px;
+    border-color:var(--teal);
+    box-shadow:var(--shadow-lg);
+  }
+  .card.hero::before{
+    content:"";position:absolute;inset:0 auto 0 0;width:6px;background:var(--teal);
+  }
+  .hero-in{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .hero-icon{
+    flex:0 0 auto;width:74px;height:74px;border-radius:20px;
+    display:grid;place-items:center;font-size:38px;
+    background:var(--surface-2);border:1px solid var(--line);
+  }
+  .hero-text{flex:1 1 320px;min-width:0}
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:'Outfit',sans-serif;font-weight:800;font-size:12px;letter-spacing:.1em;
+    text-transform:uppercase;color:#fff;background:var(--teal);
+    padding:4px 11px;border-radius:999px;margin-bottom:9px;
+  }
+  .card h2{margin:0;font-size:clamp(21px,2.8vw,29px);font-weight:900;line-height:1.25}
+  .card .en{margin:3px 0 0;font-family:'Outfit',sans-serif;font-weight:600;color:var(--ink-3);font-size:14px;letter-spacing:.04em}
+  .card p.desc{margin:10px 0 0;color:var(--ink-2);font-size:16px}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .tag{
+    font-size:13px;font-weight:700;color:var(--ink-2);
+    background:var(--surface-2);border:1px solid var(--line);
+    padding:4px 11px;border-radius:999px;
+  }
+  .tag.hot{color:#fff;background:var(--amber);border-color:transparent}
+  .go{
+    flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;
+    font-family:'Outfit','Noto Sans SC',sans-serif;font-weight:800;font-size:17px;
+    color:#fff;background:var(--teal);padding:13px 24px;border-radius:14px;
+  }
+  .card.alt{border-left:6px solid var(--violet)}
+  .alt-in{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .alt-icon{
+    flex:0 0 auto;width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
+    font-size:27px;background:var(--surface-2);border:1px solid var(--line);
+  }
+  .alt-text{flex:1 1 280px;min-width:0}
+  .go.ghost{color:var(--violet);background:transparent;border:1.5px solid var(--violet);font-size:16px;padding:11px 20px}
+
+  /* ---------- checklist ---------- */
+  .recap{
+    margin-top:34px;background:var(--surface);border:1px solid var(--line);
+    border-radius:var(--r);box-shadow:var(--shadow);padding:22px;
+  }
+  .recap-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .recap h2{margin:0;font-size:clamp(20px,2.5vw,26px);font-weight:900}
+  .recap .hint{margin:6px 0 0;color:var(--ink-2);font-size:15px}
+  .count{
+    font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;color:var(--star);
+    background:var(--surface-2);border:1px solid var(--line);
+    padding:5px 13px;border-radius:999px;font-variant-numeric:tabular-nums;white-space:nowrap;
+  }
+  .bar{height:9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;margin:16px 0 4px}
+  .bar i{display:block;height:100%;width:0;background:var(--teal);transition:width .35s cubic-bezier(.4,1.3,.5,1)}
+
+  ul.list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px}
+  .item{
+    width:100%;display:flex;align-items:flex-start;gap:13px;text-align:left;
+    font:inherit;font-size:16px;color:var(--ink);cursor:pointer;
+    background:var(--surface-2);border:1px solid var(--line);border-radius:13px;
+    padding:13px 15px;transition:background .15s ease,border-color .15s ease;
+  }
+  .item:hover{border-color:var(--line-2)}
+  .item:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+  .item .tick{
+    flex:0 0 auto;width:25px;height:25px;border-radius:8px;margin-top:2px;
+    display:grid;place-items:center;font-size:15px;font-weight:900;
+    color:transparent;background:var(--surface);border:1.5px solid var(--line-2);
+    transition:all .18s ease;
+  }
+  .item[aria-pressed="true"]{background:transparent;border-color:var(--teal)}
+  .item[aria-pressed="true"] .tick{color:#fff;background:var(--teal);border-color:var(--teal)}
+  .item b{font-weight:800}
+  .item .src{
+    display:inline-block;margin-left:7px;font-family:'Outfit',sans-serif;font-weight:700;
+    font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--ink-3);border:1px solid var(--line-2);border-radius:999px;padding:1px 8px;
+    vertical-align:2px;white-space:nowrap;
+  }
+  .item .src.next{color:var(--amber);border-color:var(--amber)}
+
+  .done-note{
+    margin:16px 0 0;padding:13px 15px;border-radius:13px;text-align:center;
+    font-weight:800;font-size:17px;color:var(--teal);
+    background:var(--surface-2);border:1px dashed var(--teal);
+  }
+  .done-note[hidden]{display:none}
+  .reset{
+    margin-top:16px;border:1px solid var(--line);background:transparent;color:var(--ink-3);
+    font:inherit;font-size:14px;font-weight:700;padding:8px 15px;border-radius:999px;cursor:pointer;
+  }
+  .reset:hover{color:var(--ink-2);background:var(--surface-2)}
+
+  footer{margin-top:34px;color:var(--ink-3);font-size:14px;text-align:center}
+  footer a{color:var(--ink-2)}
+
+  @media (min-width:760px){
+    .hero-in{flex-wrap:nowrap}
+    .alt-in{flex-wrap:nowrap}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="head">
+    <div>
+      <p class="eyebrow">Year 3 · Position &amp; Direction</p>
+      <h1>三年级 · 今天学了什么？</h1>
+      <p class="sub">下课前，选一个活动再玩一次，然后在下面勾一勾：今天我学会了哪几样。</p>
+    </div>
+    <button class="theme-btn" id="themeBtn" type="button">🌙 夜间</button>
+  </header>
+
+  <div class="cards">
+
+    <!-- ===== 主活动 ===== -->
+    <a class="card hero" href="./position-lab.html">
+      <div class="hero-in">
+        <div class="hero-icon" aria-hidden="true">📷</div>
+        <div class="hero-text">
+          <span class="badge">★ 今日主活动 · Main</span>
+          <h2>位置小侦探 · 镜头找位置</h2>
+          <p class="en">Position Vocabulary Lab · Camera</p>
+          <p class="desc">先找参照物，再说方向：<b>A 在 B 的 ____ 边</b>。看图选词、拖动摆放，最后用<b>摄像头 + 红蓝卡片</b>真的做一次。</p>
+          <div class="tags">
+            <span class="tag">上下左右</span>
+            <span class="tag">东南西北</span>
+            <span class="tag">两种说法</span>
+            <span class="tag hot">📷 摄像头实验</span>
+          </div>
+        </div>
+        <span class="go">开始 →</span>
+      </div>
+    </a>
+
+    <!-- ===== 复习 ===== -->
+    <a class="card alt" href="./direction-quest.html">
+      <div class="alt-in">
+        <div class="alt-icon" aria-hidden="true">🧭</div>
+        <div class="alt-text">
+          <h2>东南西北闯关</h2>
+          <p class="en">Direction Quest · 9 关</p>
+          <p class="desc">指南针 → 右手找东 → 教室四面墙 → <b>转身测试</b> → 地图上北下南 <span class="lat">NEWS</span>。</p>
+        </div>
+        <span class="go ghost">复习 →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ===== 自评清单 ===== -->
+  <section class="recap">
+    <div class="recap-head">
+      <div>
+        <h2>今天我学会了——</h2>
+        <p class="hint">一句一句念出来。学会了的，就按一下把它勾上。</p>
+      </div>
+      <span class="count" id="count" aria-live="polite">0 / 7</span>
+    </div>
+
+    <div class="bar" role="img" aria-label="完成进度"><i id="barFill"></i></div>
+
+    <ul class="list" id="list"></ul>
+
+    <p class="done-note" id="doneNote" hidden>七项全勾上了，你今天很棒！🎉</p>
+    <button class="reset" id="resetBtn" type="button">清空勾选</button>
+  </section>
+
+  <footer>
+    <p>三年级 · 位置与方向 · 学习标准 8.1.1　|　<a href="./position-lab.html">位置小侦探</a> · <a href="./direction-quest.html">东南西北闯关</a></p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var ITEMS = [
+    { t:'我会张开双手，用<b>右手指着太阳升起的地方</b>，找出东、南、西、北。', s:'闯关' },
+    { t:'我知道<b>我转身的时候，东南西北不会跟着我转</b>。', s:'闯关' },
+    { t:'我会念口诀：地图上<b>上北下南、左西右东</b>，也会拼 <b class="lat">NEWS</b>。', s:'闯关' },
+    { t:'我会先找<b>参照物</b>，再说：<b>A 在 B 的 ____ 边</b>。', s:'小侦探' },
+    { t:'我知道同一个位置有<b>两种说法</b>——「右边」也就是「东边」。', s:'小侦探' },
+    { t:'我会看<b>镜头画面</b>里的左右，把红卡片放到蓝卡片的指定那一边。', s:'小侦探' },
+    { t:'我会用<b>向右几格、向上几格</b>说出格子的位置。', s:'下一节', next:true }
+  ];
+
+  var KEY = 'y3-recap-v1';
+  var THEME_KEY = 'y3-recap-theme';
+  var state = load();
+
+  function load(){
+    try{
+      var raw = localStorage.getItem(KEY);
+      if(!raw) return [];
+      var v = JSON.parse(raw);
+      return Array.isArray(v) ? v : [];
+    }catch(e){ return []; }
+  }
+  function save(){
+    try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+  }
+  function isOn(i){ return state.indexOf(i) !== -1; }
+
+  /* ---------- checklist ---------- */
+  var list = document.getElementById('list');
+  var countEl = document.getElementById('count');
+  var barFill = document.getElementById('barFill');
+  var doneNote = document.getElementById('doneNote');
+
+  ITEMS.forEach(function(item, i){
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'item';
+    b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = '<span class="tick" aria-hidden="true">✓</span>' +
+                  '<span>' + item.t +
+                  '<span class="src' + (item.next ? ' next' : '') + '">' + item.s + '</span>' +
+                  '</span>';
+    b.addEventListener('click', function(){
+      var at = state.indexOf(i);
+      if(at === -1){ state.push(i); } else { state.splice(at, 1); }
+      save();
+      paint();
+    });
+    li.appendChild(b);
+    list.appendChild(li);
+  });
+
+  var buttons = list.querySelectorAll('.item');
+
+  function paint(){
+    var n = 0;
+    for(var i = 0; i < ITEMS.length; i++){
+      var on = isOn(i);
+      buttons[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+      if(on) n++;
+    }
+    countEl.textContent = n + ' / ' + ITEMS.length;
+    barFill.style.width = Math.round(n / ITEMS.length * 100) + '%';
+    doneNote.hidden = (n !== ITEMS.length);
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    state = [];
+    save();
+    paint();
+  });
+
+  paint();
+
+  /* ---------- theme ---------- */
+  var themeBtn = document.getElementById('themeBtn');
+
+  function stored(){
+    try{ return localStorage.getItem(THEME_KEY); }catch(e){ return null; }
+  }
+  function systemDark(){
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme:dark)').matches;
+  }
+  function applyTheme(mode){
+    if(mode){ document.documentElement.setAttribute('data-theme', mode); }
+    else { document.documentElement.removeAttribute('data-theme'); }
+    var dark = mode ? (mode === 'dark') : systemDark();
+    themeBtn.textContent = dark ? '☀ 日间' : '🌙 夜间';
+  }
+
+  applyTheme(stored());
+
+  themeBtn.addEventListener('click', function(){
+    var dark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+               (!document.documentElement.hasAttribute('data-theme') && systemDark());
+    var next = dark ? 'light' : 'dark';
+    try{ localStorage.setItem(THEME_KEY, next); }catch(e){}
+    applyTheme(next);
+  });
+})();
+</script>
+
+</body>
+</html>

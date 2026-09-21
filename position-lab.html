@@ -1,0 +1,2488 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="三年级位置词汇互动课堂：上下左右、东南西北，两种说法配对与换参照物，以及摄像头彩色卡片实验。">
+  <title>位置小侦探｜词汇课堂</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --ink: #f5f7ff;
+      --muted: #aab5d1;
+      --bg: #0e1221;
+      --panel: rgba(24, 31, 56, .9);
+      --panel-2: rgba(32, 41, 73, .95);
+      --line: rgba(255, 255, 255, .11);
+      --accent: #7de2d1;
+      --accent-2: #ffc857;
+      --pink: #ff7096;
+      --blue: #6eb5ff;
+      --green: #8de38f;
+      --danger: #ff9f9f;
+      --shadow: 0 22px 60px rgba(0, 0, 0, .24);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(125, 226, 209, .14), transparent 32rem),
+        radial-gradient(circle at 90% 0%, rgba(255, 200, 87, .13), transparent 28rem),
+        linear-gradient(135deg, #0e1221 0%, #13182b 55%, #0c1020 100%);
+      font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+      overflow-x: hidden;
+    }
+
+    button, input { font: inherit; }
+
+    button {
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:focus-visible {
+      outline: 3px solid var(--accent-2);
+      outline-offset: 3px;
+    }
+
+    .app-shell {
+      width: min(1500px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      color: #172139;
+      background: linear-gradient(135deg, var(--accent), #b5fff3);
+      box-shadow: 0 10px 28px rgba(125, 226, 209, .25);
+      font-size: 28px;
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h1 {
+      font-size: clamp(1.25rem, 2.2vw, 2rem);
+      letter-spacing: -.03em;
+    }
+
+    .eyebrow {
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: .76rem;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .top-actions { display: flex; align-items: center; gap: 10px; }
+
+    .status-pill, .mini-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 34px;
+      padding: 7px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .06);
+      font-size: .82rem;
+    }
+
+    .status-pill::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      content: "";
+    }
+
+    .button-ghost, .button-primary, .button-warm {
+      min-height: 42px;
+      padding: 0 15px;
+      border-radius: 13px;
+      font-weight: 800;
+      transition: transform .16s ease, filter .16s ease, background .16s ease;
+    }
+
+    .button-ghost {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .button-primary {
+      color: #112034;
+      background: var(--accent);
+    }
+
+    .button-warm {
+      color: #211a0d;
+      background: var(--accent-2);
+    }
+
+    .button-ghost:hover, .button-primary:hover, .button-warm:hover,
+    .answer-button:hover, .word-chip:hover, .mode-tab:hover { transform: translateY(-2px); filter: brightness(1.08); }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .sidebar { padding: 18px; }
+
+    .sidebar-section + .sidebar-section { margin-top: 22px; }
+
+    .section-label {
+      margin-bottom: 11px;
+      color: var(--muted);
+      font-size: .77rem;
+      font-weight: 850;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .lesson-card {
+      padding: 17px;
+      border: 1px solid rgba(125, 226, 209, .22);
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(125, 226, 209, .13), rgba(125, 226, 209, .03));
+    }
+
+    .lesson-card strong { display: block; margin-bottom: 7px; font-size: 1.12rem; }
+    .lesson-card p, .teacher-tip p { color: var(--muted); font-size: .88rem; line-height: 1.65; }
+
+    .word-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+    .word-chip {
+      min-height: 43px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .045);
+      font-size: .9rem;
+      font-weight: 800;
+      transition: transform .16s ease, filter .16s ease, border .16s ease, color .16s ease;
+    }
+
+    .word-chip.active {
+      color: #102435;
+      border-color: transparent;
+      background: var(--accent);
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .score-item {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, .045);
+    }
+
+    .score-value { display: block; margin-top: 4px; font-size: 1.5rem; font-weight: 900; }
+    .score-label { color: var(--muted); font-size: .76rem; }
+
+    .teacher-tip {
+      padding: 13px;
+      border-left: 3px solid var(--accent-2);
+      background: rgba(255, 200, 87, .07);
+    }
+
+    .main-panel { min-width: 0; padding: 16px; }
+
+    .mode-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 15px;
+      padding: 5px;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, .15);
+    }
+
+    .mode-tab {
+      min-height: 54px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      color: var(--muted);
+      background: transparent;
+      font-weight: 850;
+      transition: transform .16s ease, filter .16s ease, background .16s ease, color .16s ease;
+    }
+
+    .mode-tab span { display: block; margin-top: 3px; color: inherit; font-size: .72rem; font-weight: 600; opacity: .72; }
+
+    .mode-tab.active {
+      color: var(--ink);
+      border-color: var(--line);
+      background: var(--panel-2);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, .14);
+    }
+
+    .fivee-strip {
+      display: flex;
+      gap: 7px;
+      margin-bottom: 10px;
+      padding: 5px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(0, 0, 0, .13);
+      scrollbar-width: thin;
+    }
+
+    .fivee-step {
+      flex: 1 0 118px;
+      min-height: 48px;
+      padding: 7px 10px;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      color: var(--muted);
+      background: transparent;
+      font-size: .78rem;
+      font-weight: 900;
+      text-align: left;
+      transition: transform .16s ease, filter .16s ease, background .16s ease, color .16s ease;
+    }
+
+    .fivee-step small { display: block; margin-top: 3px; color: inherit; font-size: .68rem; font-weight: 600; opacity: .75; }
+    .fivee-step:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .fivee-step.active { color: #132735; background: var(--accent); }
+
+    .phase-guide {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 13px;
+      padding: 11px 14px;
+      border: 1px solid rgba(125, 226, 209, .2);
+      border-radius: 15px;
+      background: rgba(125, 226, 209, .06);
+    }
+
+    .phase-guide-tag {
+      display: grid;
+      place-items: center;
+      min-width: 80px;
+      min-height: 34px;
+      padding: 0 10px;
+      border-radius: 10px;
+      color: #122433;
+      background: var(--accent);
+      font-size: .76rem;
+      font-weight: 950;
+      letter-spacing: .08em;
+    }
+
+    .phase-guide strong { display: block; font-size: .98rem; }
+    .phase-guide-copy { margin-top: 2px; color: var(--muted); font-size: .82rem; line-height: 1.45; }
+
+    .explain-guide {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      margin: -3px 5px 13px;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 200, 87, .28);
+      border-radius: 15px;
+      background: rgba(255, 200, 87, .07);
+    }
+
+    .explain-guide[hidden] { display: none; }
+    .explain-guide strong { color: var(--accent-2); }
+    .vocabulary-ribbon { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+    .vocabulary-ribbon span { padding: 5px 9px; border-radius: 999px; color: #15243a; background: rgba(255,255,255,.8); font-size: .78rem; font-weight: 900; }
+
+    .mode { animation: rise .24s ease both; }
+    .mode[hidden] { display: none; }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+
+    .mode-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 15px;
+      margin: 10px 5px 15px;
+    }
+
+    .mode-heading h2 { font-size: clamp(1.2rem, 2.1vw, 1.75rem); letter-spacing: -.03em; }
+    .mode-heading p { margin-top: 5px; color: var(--muted); font-size: .92rem; line-height: 1.5; }
+
+    .prompt-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 65px;
+      margin-bottom: 13px;
+      padding: 13px 17px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 17px;
+      background: linear-gradient(100deg, rgba(255,255,255,.1), rgba(255,255,255,.035));
+    }
+
+    .prompt-main { font-size: clamp(1.1rem, 2.2vw, 1.65rem); font-weight: 900; }
+    .prompt-main em { color: var(--accent-2); font-style: normal; }
+    .role-text { display: inline-block; padding: 1px 6px; border-radius: 7px; font-weight: 950; }
+    .role-text.role-red { color: #a9193c; background: #ffe1e8; }
+    .role-text.role-blue { color: #0756a7; background: #dceeff; }
+    .role-text small { margin-left: 4px; font-size: .62em; font-weight: 900; }
+    .prompt-note { max-width: 230px; color: var(--muted); font-size: .78rem; line-height: 1.45; text-align: right; }
+
+    .scene {
+      position: relative;
+      min-height: clamp(320px, 49vw, 580px);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .14);
+      border-radius: 22px;
+      background:
+        linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px),
+        radial-gradient(circle at center, rgba(110, 181, 255, .14), transparent 62%),
+        #161f3c;
+      background-size: 48px 48px, 48px 48px, auto, auto;
+      user-select: none;
+    }
+
+    .scene::after {
+      position: absolute;
+      inset: 15px;
+      border: 1px dashed rgba(255,255,255,.16);
+      border-radius: 15px;
+      pointer-events: none;
+      content: "";
+    }
+
+    .flash-object, .command-object {
+      position: absolute;
+      z-index: 3;
+      display: grid;
+      place-items: center;
+      width: clamp(84px, 11vw, 126px);
+      height: clamp(84px, 11vw, 126px);
+      border: 2px solid rgba(255,255,255,.52);
+      border-radius: 32px;
+      box-shadow: 0 18px 35px rgba(0,0,0,.25), inset 0 0 25px rgba(255,255,255,.1);
+      font-size: clamp(2.45rem, 6vw, 4rem);
+      transform: translate(-50%, -50%);
+      transition: left .35s ease, top .35s ease, transform .2s ease;
+    }
+
+    .flash-object small, .command-object small {
+      position: absolute;
+      bottom: -27px;
+      left: 50%;
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(0,0,0,.42);
+      font-size: .76rem;
+      font-weight: 800;
+      white-space: nowrap;
+      transform: translateX(-50%);
+    }
+
+    .object-blue { background: linear-gradient(145deg, #6eb5ff, #326fe1); }
+    .object-pink { background: linear-gradient(145deg, #ff9eb8, #ec4f79); }
+
+    .compass-rose {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 80px;
+      height: 80px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 50%;
+      color: var(--muted);
+      background: rgba(0,0,0,.16);
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .compass-rose::before { position: absolute; content: "N"; top: 6px; color: var(--accent); }
+    .compass-rose::after { position: absolute; content: "S"; bottom: 6px; }
+    .compass-east, .compass-west { position: absolute; }
+    .compass-east { right: 8px; }
+    .compass-west { left: 8px; }
+
+    .answer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .answer-grid.dense { grid-template-columns: repeat(5, 1fr); }
+
+    .answer-button {
+      min-height: 58px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 15px;
+      color: var(--ink);
+      background: rgba(255,255,255,.075);
+      font-size: clamp(1rem, 2vw, 1.24rem);
+      font-weight: 900;
+      transition: transform .16s ease, filter .16s ease, background .16s ease;
+    }
+
+    .answer-button.correct { color: #0f2b25; background: var(--green); }
+    .answer-button.wrong { color: #351821; background: var(--danger); }
+
+    .feedback {
+      min-height: 42px;
+      margin-top: 10px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      background: rgba(255,255,255,.035);
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .feedback.good { color: var(--green); background: rgba(141, 227, 143, .1); }
+    .feedback.warn { color: var(--accent-2); }
+
+    .command-scene { background-size: 52px 52px, 52px 52px, auto, auto; }
+    .command-object { cursor: grab; touch-action: none; }
+    .command-object:active { cursor: grabbing; }
+    .command-object.dragging { z-index: 5; transform: translate(-50%, -50%) scale(1.08); transition: none; }
+    .command-target { background: linear-gradient(145deg, #ff9eb8, #df426e); }
+    .command-ref { background: linear-gradient(145deg, #7dc9ff, #3a73de); }
+
+    .command-helper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-top: 13px;
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    .camera-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr);
+      gap: 13px;
+    }
+
+    .camera-shell {
+      position: relative;
+      min-height: clamp(320px, 45vw, 560px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 22px;
+      background: #080b15;
+    }
+
+    #cameraCanvas { display: block; width: 100%; height: 100%; min-height: inherit; object-fit: cover; }
+
+    .camera-live-badge {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      left: 18px;
+      z-index: 4;
+      padding: 13px 18px 15px;
+      border: 2px solid rgba(255,255,255,.35);
+      border-radius: 18px;
+      background: rgba(8, 12, 26, .84);
+      box-shadow: 0 12px 28px rgba(0,0,0,.25);
+      text-align: center;
+      backdrop-filter: blur(9px);
+    }
+
+    .camera-live-badge[hidden] { display: none; }
+
+    .camera-live-caption {
+      color: rgba(255,255,255,.78);
+      font-size: .83rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .camera-live-value {
+      margin-top: 2px;
+      color: var(--accent-2);
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      font-weight: 950;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+    }
+
+    .camera-live-sub {
+      margin-top: 6px;
+      color: rgba(255,255,255,.82);
+      font-size: clamp(.85rem, 1.35vw, 1.05rem);
+      font-weight: 700;
+    }
+
+    .camera-live-badge.good {
+      border-color: rgba(141, 227, 143, .9);
+      background: rgba(13, 67, 52, .9);
+    }
+
+    .camera-live-badge.candidate { border-color: rgba(255, 200, 87, .78); }
+
+    .camera-live-badge.good .camera-live-value { color: var(--green); }
+
+    .camera-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--muted);
+      background: linear-gradient(135deg, rgba(18,25,48,.96), rgba(9,12,24,.96));
+      text-align: center;
+    }
+
+    .camera-placeholder[hidden] { display: none; }
+
+    .camera-placeholder strong { display: block; margin-bottom: 7px; color: var(--ink); font-size: 1.25rem; }
+
+    .camera-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,.045);
+    }
+
+    .camera-side h3 { font-size: 1.08rem; }
+    .camera-side p { color: var(--muted); font-size: .86rem; line-height: 1.65; }
+
+    .marker-instructions {
+      display: grid;
+      gap: 8px;
+      margin-top: auto;
+      padding-top: 7px;
+    }
+
+    .marker-row { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: .82rem; }
+    .marker-dot { width: 19px; height: 19px; border-radius: 6px; }
+    .marker-red { background: #f04f6f; }
+    .marker-blue { background: #4c95f7; }
+
+    .camera-result {
+      min-height: 78px;
+      padding: 15px;
+      border-radius: 13px;
+      color: var(--muted);
+      background: rgba(0,0,0,.17);
+      font-size: clamp(1rem, 1.7vw, 1.25rem);
+      font-weight: 800;
+      line-height: 1.5;
+    }
+
+    .camera-result.good { color: var(--green); background: rgba(141, 227, 143, .1); }
+    .camera-result.warn { color: var(--accent-2); background: rgba(255, 200, 87, .1); }
+
+    .camera-orientation-question {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 13px;
+      padding: 13px 16px;
+      border: 2px solid #f0c64c;
+      border-radius: 17px;
+      color: #263b55;
+      background: #fff8db;
+    }
+
+    .camera-question-label {
+      display: block;
+      margin-bottom: 4px;
+      color: #986d00;
+      font-size: .74rem;
+      font-weight: 950;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .camera-orientation-question strong { display: block; font-size: 1rem; line-height: 1.45; }
+    .camera-orientation-question p { margin-top: 4px; color: #526b83; font-size: .84rem; line-height: 1.5; }
+    .camera-orientation-answer { margin-top: 7px; color: #075c3b; font-weight: 900; }
+    .camera-orientation-answer[hidden] { display: none; }
+
+    .camera-role-state {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: -2px;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 29px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      font-size: .76rem;
+      font-weight: 950;
+    }
+
+    .role-badge.reference { color: #0756a7; background: #dceeff; }
+    .role-badge.target { color: #a9193c; background: #ffe1e8; }
+    .role-badge.role-red { color: #a9193c; background: #ffe1e8; }
+    .role-badge.role-blue { color: #0756a7; background: #dceeff; }
+
+    .camera-progress {
+      display: grid;
+      gap: 7px;
+      padding: 11px 12px;
+      border: 1px solid #c4d3e3;
+      border-radius: 13px;
+      color: #294966;
+      background: #f4f8fc;
+    }
+
+    .camera-progress-title { font-size: .84rem; font-weight: 950; }
+    .camera-score-row { display: flex; flex-wrap: wrap; gap: 8px; }
+    .camera-score-chip {
+      display: inline-flex;
+      gap: 5px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      color: #214461;
+      background: #e5eff8;
+      font-size: .78rem;
+      font-weight: 800;
+    }
+    .camera-score-chip strong { color: #075dcc; font-size: .95rem; }
+
+    .camera-round-complete {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 2px solid #65bd93;
+      border-radius: 14px;
+      color: #075c3b;
+      background: #e2f8ed;
+    }
+    .camera-round-complete[hidden] { display: none; }
+    .camera-round-complete strong { font-size: 1.05rem; }
+    .camera-round-complete span { color: #37644f; font-size: .82rem; line-height: 1.45; }
+
+    .camera-role-change {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      left: 18px;
+      z-index: 7;
+      padding: 14px 16px;
+      border: 2px solid #f0b900;
+      border-radius: 16px;
+      color: #5f4300;
+      background: rgba(255, 248, 219, .97);
+      box-shadow: 0 12px 30px rgba(58, 47, 0, .18);
+      text-align: center;
+      font-weight: 950;
+      transform: translateY(-10px);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .camera-role-change.show { animation: roleChange .22s ease forwards; }
+    @keyframes roleChange {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .bottom-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin: 14px 5px 0;
+      color: var(--muted);
+      font-size: .76rem;
+      line-height: 1.5;
+    }
+
+    .kbd { padding: 2px 6px; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: rgba(255,255,255,.06); }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 14px; }
+      .sidebar-section + .sidebar-section { margin-top: 0; }
+      .teacher-tip { align-self: stretch; }
+    }
+
+    @media (max-width: 700px) {
+      .app-shell { padding: 12px; }
+      .topbar { align-items: flex-start; flex-direction: column; gap: 12px; }
+      .top-actions { width: 100%; justify-content: space-between; }
+      .sidebar { display: block; }
+      .sidebar-section + .sidebar-section { margin-top: 18px; }
+      .mode-heading { flex-direction: column; }
+      .prompt-card { align-items: flex-start; flex-direction: column; }
+      .prompt-note { max-width: none; text-align: left; }
+      .phase-guide { grid-template-columns: 1fr; align-items: start; }
+      .phase-guide-tag { width: max-content; }
+      .explain-guide { grid-template-columns: 1fr; }
+      .answer-grid, .answer-grid.dense { grid-template-columns: repeat(2, 1fr); }
+      .camera-grid { grid-template-columns: 1fr; }
+      .camera-side { min-height: 0; }
+      .camera-orientation-question { grid-template-columns: 1fr; }
+      .bottom-note { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+
+    /* Student-display mode: large, short, high-contrast and easy to scan. */
+    :root {
+      --ink: #13233f;
+      --muted: #304b66;
+      --bg: #f4f8fd;
+      --panel: #ffffff;
+      --panel-2: #e5efff;
+      --line: #b7c8dc;
+      --accent: #075dcc;
+      --accent-2: #f4b400;
+      --pink: #e83f68;
+      --blue: #1674d1;
+      --green: #087a4f;
+      --danger: #b52d43;
+      --shadow: 0 12px 28px rgba(25, 61, 103, .12);
+    }
+
+    body {
+      color: var(--ink);
+      background: var(--bg);
+      font-size: 18px;
+    }
+
+    .app-shell { padding: 18px; }
+    .topbar { margin-bottom: 14px; }
+    .brand-mark { color: #fff; background: var(--accent); box-shadow: none; }
+    .eyebrow { color: var(--accent); }
+    .status-pill, .mini-pill { color: #244462; border-color: var(--line); background: #eef4fb; }
+    .status-pill::before { background: var(--green); }
+    .button-ghost { color: var(--ink); border-color: #9fb3ca; background: #eef3f8; }
+    .button-primary { color: #fff; background: var(--accent); }
+    .button-warm { color: #1d2c43; background: #ffd34d; }
+    .panel { border-color: #c5d3e3; background: var(--panel); box-shadow: var(--shadow); backdrop-filter: none; }
+    .layout { display: block; }
+    .main-panel { padding: 24px; }
+
+    .teacher-drawer { margin-bottom: 13px; }
+    .teacher-drawer > summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      padding: 10px 16px;
+      border: 1px solid #b7c8dc;
+      border-radius: 14px;
+      color: #173b63;
+      background: #eaf3ff;
+      cursor: pointer;
+      font-weight: 900;
+      list-style: none;
+    }
+    .teacher-drawer > summary::-webkit-details-marker { display: none; }
+    .teacher-drawer > summary::after { content: "＋"; font-size: 1.4rem; line-height: 1; }
+    .teacher-drawer[open] > summary::after { content: "－"; }
+    .teacher-drawer > summary span { color: var(--muted); font-size: .82rem; font-weight: 700; }
+    .teacher-drawer[open] .sidebar { margin-top: 12px; }
+    .sidebar { padding: 16px; }
+    .lesson-card { border-color: #a9c9f4; background: #eff7ff; }
+    .lesson-card p, .teacher-tip p, .section-label, .score-label { color: var(--muted); }
+    .word-chip { color: #244462; border-color: #b7c8dc; background: #f5f8fc; }
+    .word-chip.active { color: #fff; background: var(--accent); }
+    .score-item { border-color: #c4d3e3; background: #f5f8fc; }
+    .teacher-tip { border-left-color: var(--accent-2); background: #fff9e5; }
+    .teacher-flow { padding: 12px; border: 1px solid #c4d3e3; border-radius: 14px; background: #f7faff; }
+    .teacher-flow .fivee-strip { margin-bottom: 8px; border-color: #c4d3e3; background: #eaf1f8; }
+    .teacher-flow .fivee-step { color: #2d4b68; }
+    .teacher-flow .fivee-step.active { color: #fff; background: var(--accent); }
+    .teacher-phase-status { color: var(--muted); font-size: .86rem; line-height: 1.4; }
+    .teacher-only { display: none !important; }
+
+    .mode-tabs { margin-bottom: 18px; padding: 6px; border: 1px solid #c4d3e3; background: #e8f0f8; }
+    .mode-tab { min-height: 76px; color: #294966; font-size: 1.16rem; }
+    .mode-tab span { margin-top: 5px; color: #3d5b78; font-size: .82rem; opacity: 1; }
+    .mode-tab.active { color: #102d50; border-color: #7fa8db; background: #d9e9ff; box-shadow: none; }
+
+    .mode-heading { margin: 10px 4px 12px; }
+    .mode-heading h2 { font-size: clamp(1.8rem, 3.2vw, 2.7rem); }
+    .mode-heading p { margin-top: 3px; color: var(--muted); font-size: 1rem; font-weight: 800; }
+    .mode-heading .mini-pill { padding: 8px 12px; color: #214462; font-size: .9rem; font-weight: 900; }
+    .prompt-card { min-height: 112px; margin-bottom: 14px; padding: 18px 24px; border-color: #a8bed7; background: #f8fbff; }
+    .prompt-main { color: #102b4d; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.12; }
+    .prompt-main em { color: #8a5700; }
+    .english-hint { display: block; margin-top: 8px; color: #35536e; font-size: clamp(.95rem, 1.5vw, 1.25rem); font-weight: 800; letter-spacing: .01em; }
+    .prompt-note { display: none; }
+
+    .scene { min-height: clamp(310px, 42vw, 560px); border-color: #8eafd2; background:
+      linear-gradient(rgba(22, 116, 209, .12) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22, 116, 209, .12) 1px, transparent 1px),
+      radial-gradient(circle at center, rgba(75, 159, 239, .18), transparent 62%),
+      #eaf4ff; }
+    .scene { background-size: 48px 48px, 48px 48px, auto, auto; }
+    .scene::after { border-color: #79a2cb; }
+    .flash-object, .command-object { width: clamp(106px, 13vw, 168px); height: clamp(106px, 13vw, 168px); border-color: #fff; box-shadow: 0 12px 20px rgba(31, 69, 113, .22), inset 0 0 20px rgba(255,255,255,.18); font-size: clamp(3rem, 7vw, 5.2rem); }
+    .flash-object small, .command-object small { bottom: -32px; padding: 5px 10px; color: #fff; background: #17324f; font-size: 1rem; }
+    .object-blue, .command-ref { background: #176fd0; }
+    .object-pink, .command-target { background: #e83f68; }
+
+    .answer-grid { gap: 13px; margin-top: 16px; }
+    .answer-button { min-height: 92px; border: 2px solid #8aa9c9; border-radius: 18px; color: #102d50; background: #eef5ff; font-size: clamp(1.7rem, 3.2vw, 2.55rem); }
+    .answer-button.correct { color: #063e29; border-color: #087a4f; background: #94e5b9; }
+    .answer-button.wrong { color: #641b2a; border-color: #b52d43; background: #ffb0ba; }
+    .word-cn, .word-en { display: block; }
+    .word-en { margin-top: 4px; color: #365774; font-size: .38em; letter-spacing: .1em; }
+    .feedback { min-height: 82px; margin-top: 14px; padding: 16px 18px; color: #274867; border: 1px solid #b7c8dc; background: #f1f6fb; font-size: clamp(1.3rem, 2.5vw, 2rem); text-align: center; }
+    .feedback.good { color: #075c3b; border-color: #65bd93; background: #e2f8ed; }
+    .feedback.warn { color: #7a4b00; border-color: #dcb55c; background: #fff8e1; }
+
+    .command-helper { color: #294966; font-size: 1rem; }
+    .camera-shell { border-color: #8eafd2; background: #10233f; }
+    .camera-side { border-color: #c4d3e3; background: #f4f8fc; }
+    .camera-side p, .marker-row { color: var(--muted); }
+    .camera-result { color: #294966; border: 1px solid #c4d3e3; background: #eaf1f8; font-size: clamp(1.25rem, 2.2vw, 1.8rem); }
+    .camera-result.good { color: #075c3b; border-color: #65bd93; background: #e2f8ed; }
+    .camera-result.warn { color: #7a4b00; border-color: #dcb55c; background: #fff8e1; }
+    .bottom-note { color: #365774; font-size: .9rem; }
+
+    .success-toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      min-width: min(620px, calc(100vw - 32px));
+      padding: 24px 32px;
+      border: 4px solid #087a4f;
+      border-radius: 24px;
+      color: #063e29;
+      background: #e2f8ed;
+      box-shadow: 0 24px 70px rgba(20, 68, 53, .28);
+      transform: translate(-50%, -50%);
+      text-align: left;
+    }
+    .success-toast[hidden] { display: none; }
+    .success-toast.show { animation: success-pop .28s ease both; }
+    .success-icon { font-size: 3.5rem; line-height: 1; }
+    .success-toast strong { display: block; font-size: clamp(2rem, 4vw, 3.2rem); line-height: 1.05; }
+    .success-toast span { display: block; margin-top: 8px; font-size: clamp(1.1rem, 2vw, 1.55rem); font-weight: 900; }
+    @keyframes success-pop { from { opacity: 0; transform: translate(-50%, -50%) scale(.82); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+
+    .choral-check {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      left: 20px;
+      z-index: 19;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px 22px;
+      border: 4px solid var(--accent);
+      border-radius: 22px;
+      color: var(--ink);
+      background: #ffffff;
+      box-shadow: 0 18px 55px rgba(17, 60, 106, .25);
+    }
+    .choral-check[hidden] { display: none; }
+    .choral-check-label { color: var(--accent); font-size: .92rem; font-weight: 950; letter-spacing: .08em; }
+    .choral-check-sentence { display: block; margin-top: 4px; font-size: clamp(1.35rem, 2.5vw, 2.2rem); line-height: 1.15; }
+    .choral-check-sentence small { display: block; margin-top: 5px; color: var(--muted); font-size: .48em; letter-spacing: .02em; }
+    .choral-check button { min-height: 62px; padding: 0 22px; border-radius: 14px; color: #fff; background: var(--accent); font-size: 1.08rem; font-weight: 950; }
+    .choral-check button small { display: block; margin-top: 3px; font-size: .65em; font-weight: 850; letter-spacing: .04em; }
+    .choral-check button:hover { filter: brightness(1.08); transform: translateY(-2px); }
+
+    .flash-object small, .command-object small {
+      right: 7px;
+      bottom: 7px;
+      left: 7px;
+      padding: 5px 7px;
+      border-radius: 9px;
+      text-align: center;
+      transform: none;
+    }
+    .flash-object small i, .command-object small i { display: block; margin-top: 2px; color: #d9eaff; font-size: .56em; font-style: normal; letter-spacing: .08em; }
+
+    /* ===== 东南西北：沿用《东南西北闯关》的颜色（北红、东橙、南青、西紫） ===== */
+    :root { --n: #D3402F; --e: #D4881B; --s: #218C7E; --w: #65529E; }
+    .dir-n { --dir: var(--n); }
+    .dir-e { --dir: var(--e); }
+    .dir-s { --dir: var(--s); }
+    .dir-w { --dir: var(--w); }
+
+    .map-layer { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+    .map-layer[hidden] { display: none; }
+    .edge-label {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      min-width: 48px;
+      padding: 5px 10px;
+      border-radius: 12px;
+      color: #fff;
+      background: var(--dir);
+      box-shadow: 0 6px 14px rgba(19, 35, 63, .16);
+      font-size: clamp(1.25rem, 2.3vw, 1.9rem);
+      font-weight: 950;
+      line-height: 1.05;
+      text-align: center;
+    }
+    .edge-label i { font-size: .52em; font-style: normal; letter-spacing: .08em; opacity: .92; }
+    .edge-top { top: 8px; left: 50%; transform: translateX(-50%); }
+    .edge-bottom { bottom: 8px; left: 50%; transform: translateX(-50%); }
+    .edge-left { top: 50%; left: 8px; transform: translateY(-50%); }
+    .edge-right { top: 50%; right: 8px; transform: translateY(-50%); }
+    .north-arrow {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+    }
+    .north-arrow-dial {
+      display: grid;
+      place-items: center;
+      width: 74px;
+      height: 74px;
+      border: 3px solid var(--n);
+      border-radius: 50%;
+      background: #fff;
+    }
+    .north-arrow svg { width: 54px; height: 54px; transition: transform .35s ease; }
+    .north-arrow-caption {
+      padding: 2px 8px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--n);
+      font-size: .82rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+
+    .map-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: -2px 0 12px;
+      padding: 10px 16px;
+      border: 2px solid #efc2b8;
+      border-radius: 14px;
+      color: #6b2a1e;
+      background: #fff4ef;
+      font-size: clamp(1rem, 1.8vw, 1.35rem);
+      font-weight: 900;
+    }
+    .map-note[hidden] { display: none; }
+    .map-note.challenge { border-color: #e2b43c; color: #6a4a00; background: #fff6d6; }
+
+    /* 参照物字卡：平时安静地标在参照物上方；换参照物时闪几下 */
+    .ref-tag {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      z-index: 2;
+      display: none;
+      padding: 3px 11px;
+      border: 2px solid #fff;
+      border-radius: 999px;
+      color: #3d2c00;
+      background: #ffd34d;
+      box-shadow: 0 4px 10px rgba(19, 35, 63, .18);
+      font-size: 1rem;
+      font-weight: 950;
+      line-height: 1.3;
+      white-space: nowrap;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .is-reference .ref-tag { display: block; }
+    .ref-flash .ref-tag { animation: refFlash .5s ease-in-out 4; }
+    @keyframes refFlash {
+      0%, 100% { transform: translateX(-50%) scale(1); background: #ffd34d; }
+      50% { transform: translateX(-50%) scale(1.35); background: #ff9f1c; }
+    }
+
+    .step-pill {
+      flex: none;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: #173b63;
+      background: #e1ecfb;
+      font-size: 1rem;
+      font-weight: 950;
+      white-space: nowrap;
+    }
+    .step-pill[hidden] { display: none; }
+
+    .prompt-main em.dir-word { color: var(--dir); }
+
+    .answer-button.dir-btn { border: 3px solid var(--dir); color: var(--dir); background: #fff; }
+    .answer-button.dir-btn .word-en { color: var(--dir); font-weight: 950; }
+    .answer-button.dir-btn.correct { color: #063e29; border-color: #087a4f; background: #94e5b9; }
+    .answer-button.dir-btn.wrong { color: #641b2a; border-color: #b52d43; background: #ffb0ba; }
+    .answer-button.dir-btn.correct .word-en, .answer-button.dir-btn.wrong .word-en { color: inherit; }
+
+    .toggle-row { display: grid; gap: 8px; }
+    .toggle-chip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 8px 12px;
+      border: 1px solid #b7c8dc;
+      border-radius: 12px;
+      color: #244462;
+      background: #f5f8fc;
+      font-size: .92rem;
+      font-weight: 850;
+      text-align: left;
+    }
+    .toggle-chip b { flex: none; padding: 3px 10px; border-radius: 999px; color: #fff; background: #8aa0b8; font-size: .8rem; }
+    .toggle-chip[aria-pressed="true"] { border-color: var(--accent); background: #eaf3ff; }
+    .toggle-chip[aria-pressed="true"] b { background: var(--green); }
+    .toggle-note { margin-top: 8px; color: var(--muted); font-size: .82rem; line-height: 1.5; }
+
+    .vocabulary-ribbon span.dir-chip { color: #fff; background: var(--dir); }
+    .explain-mnemonic { display: block; margin-top: 8px; font-weight: 900; }
+
+    .set-switch {
+      display: flex;
+      flex: none;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid #b7c8dc;
+      border-radius: 16px;
+      background: #e8f0f8;
+    }
+    .set-switch button {
+      min-height: 58px;
+      padding: 6px 16px;
+      border: 2px solid transparent;
+      border-radius: 12px;
+      color: #294966;
+      background: transparent;
+      font-size: 1.15rem;
+      font-weight: 950;
+      transition: background .16s ease, color .16s ease;
+    }
+    .set-switch button small { display: block; margin-top: 2px; font-size: .62rem; font-weight: 800; letter-spacing: .06em; opacity: .8; }
+    .set-switch button:hover { background: #f4f8fc; }
+    .set-switch button[aria-pressed="true"] { color: #fff; border-color: #0a4ea8; background: var(--accent); }
+
+    @media (max-width: 700px) {
+      .set-switch { width: 100%; }
+      .set-switch button { flex: 1; font-size: 1rem; }
+      .north-arrow-dial { width: 56px; height: 56px; }
+      .north-arrow svg { width: 40px; height: 40px; }
+      .edge-label { min-width: 40px; padding: 4px 7px; }
+      .step-pill { align-self: flex-start; }
+      .scene { min-height: 400px; }
+      .flash-object, .command-object { width: 88px; height: 88px; border-radius: 24px; font-size: 2.6rem; }
+      .flash-object small, .command-object small { font-size: .78rem; }
+    }
+
+    @media (max-width: 700px) {
+      .app-shell { padding: 10px; }
+      .main-panel { padding: 14px; }
+      .mode-tab { min-height: 68px; font-size: .95rem; }
+      .mode-tab span { font-size: .67rem; }
+      .prompt-card { padding: 15px 17px; }
+      .answer-button { min-height: 76px; }
+      .success-toast { padding: 20px; }
+      .choral-check { grid-template-columns: 1fr; gap: 10px; padding: 16px; }
+      .choral-check button { width: 100%; }
+    }
+
+    /* --- y3 recap hub: back link (added by the recap project) --- */
+    .y3-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 42px;
+      padding: 0 15px;
+      border-radius: 13px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .06);
+      color: var(--ink);
+      font-weight: 800;
+      font-size: .95rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform .16s ease, filter .16s ease;
+    }
+    .y3-home:hover { transform: translateY(-2px); filter: brightness(1.12); }
+    .y3-home:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">🧭</div>
+        <div>
+          <div class="eyebrow">Grade 3 · Spatial Words</div>
+          <h1>位置小侦探｜词汇课堂</h1>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a class="y3-home" href="./index.html" title="Back to menu">← 回目录</a>
+        <div class="status-pill" id="appStatus">现在：看图，说词</div>
+        <button class="button-ghost" id="soundButton" type="button" aria-pressed="true">🔊 声音开</button>
+        <button class="button-ghost" id="fullscreenButton" type="button">⛶ 大屏</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <details class="teacher-drawer">
+        <summary><span>⚙ 课堂路线</span><span>Learning route · 点击展开</span></summary>
+      <aside class="panel sidebar" aria-label="课堂路线区">
+        <section class="sidebar-section">
+          <div class="lesson-card">
+            <strong>今天探索：位置词 + 东南西北</strong>
+            <p>先找参照物，再说方向：A 在 B 的____边。把「右边」和「东边」连起来——平放的地图上北下南，左西右东。</p>
+          </div>
+        </section>
+
+        <section class="sidebar-section teacher-flow">
+          <div class="section-label">本课学习路线</div>
+          <div class="fivee-strip" aria-label="5E 学习流程">
+            <button class="fivee-step active" data-phase="engage" type="button">开始<small>Engage</small></button>
+            <button class="fivee-step" data-phase="explore" type="button">操作<small>Explore</small></button>
+            <button class="fivee-step" data-phase="explain" type="button">说词<small>Explain</small></button>
+            <button class="fivee-step" data-phase="elaborate" type="button">应用<small>Elaborate</small></button>
+            <button class="fivee-step" data-phase="evaluate" type="button">小测<small>Evaluate</small></button>
+          </div>
+          <div class="teacher-phase-status" id="teacherPhaseStatus">当前学习：开始 · 先猜，再说</div>
+        </section>
+
+        <section class="sidebar-section">
+          <div class="section-label">看图选词 · 词汇包</div>
+          <div class="word-list" id="wordSetList">
+            <button class="word-chip" data-set="core" type="button">上下左右</button>
+            <button class="word-chip active" data-set="compass" type="button">东南西北</button>
+            <button class="word-chip" data-set="dual" type="button">两种说法</button>
+            <button class="word-chip" data-set="all" type="button">全部</button>
+            <button class="word-chip" data-set="depth" type="button" hidden>前面 / 后面</button>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <div class="section-label">东南西北设定</div>
+          <div class="toggle-row">
+            <button class="toggle-chip" id="reverseToggle" type="button" aria-pressed="true">反问：换参照物<b>开</b></button>
+            <button class="toggle-chip" id="challengeToggle" type="button" aria-pressed="false">挑战：北不在上面<b>关</b></button>
+          </div>
+          <p class="toggle-note">反问：答完后再问「蓝球在红星的哪一边？」。挑战：北的箭头改指向右边，「右边」就不再是「东边」（呼应第 3 关「方向不会跟着你转」）。</p>
+        </section>
+
+        <section class="sidebar-section">
+          <div class="section-label">课堂记录</div>
+          <div class="score-card">
+            <div class="score-item"><span class="score-label">答对</span><span class="score-value" id="scoreValue">0</span></div>
+            <div class="score-item"><span class="score-label">连续</span><span class="score-value" id="streakValue">0</span></div>
+          </div>
+          <button class="button-ghost" id="resetButton" type="button" style="width:100%; margin-top:9px;">重新开始记录</button>
+        </section>
+
+        <section class="sidebar-section teacher-tip">
+          <div class="section-label" style="margin-bottom:6px; color:var(--accent-2);">小组合作提示</div>
+          <p>学生先观察、讨论、操作，再用完整句子说出位置；小组轮换操作员、观察员和表达员。</p>
+        </section>
+      </aside>
+      </details>
+
+      <main class="panel main-panel">
+        <nav class="mode-tabs" aria-label="活动模式">
+          <button class="mode-tab active" data-mode="flash" type="button">⚡ 看图选词<span>LOOK · SAY</span></button>
+          <button class="mode-tab" data-mode="command" type="button">🧲 拖动摆放<span>DRAG · PLACE</span></button>
+          <button class="mode-tab" data-mode="camera" type="button">📷 镜头找位置<span>CAMERA · OPTIONAL</span></button>
+        </nav>
+
+        <div class="fivee-strip teacher-only" aria-label="5E 学习流程">
+          <button class="fivee-step active" data-phase="engage" type="button">1 Engage<small>唤醒经验</small></button>
+          <button class="fivee-step" data-phase="explore" type="button">2 Explore<small>操作与讨论</small></button>
+          <button class="fivee-step" data-phase="explain" type="button">3 Explain<small>明确词汇</small></button>
+          <button class="fivee-step" data-phase="elaborate" type="button">4 Elaborate<small>迁移应用</small></button>
+          <button class="fivee-step" data-phase="evaluate" type="button">5 Evaluate<small>检查学习</small></button>
+        </div>
+
+        <div class="phase-guide teacher-only" id="phaseGuide">
+          <span class="phase-guide-tag" id="phaseTag">ENGAGE</span>
+          <div>
+            <strong id="phaseTitle">先猜，再说</strong>
+            <div class="phase-guide-copy" id="phaseText">学生先用手势或语言描述位置，不急着讲定义。</div>
+          </div>
+          <span class="mini-pill" id="phaseTool">闪电判断</span>
+        </div>
+
+        <div class="explain-guide teacher-only" id="explainGuide" hidden>
+          <div>
+            <strong>词汇小结：</strong>先找参照物，再说另一个物体在哪一边。
+            <div class="vocabulary-ribbon"><span>左边</span><span>右边</span><span>上面</span><span>下面</span></div>
+            <div class="vocabulary-ribbon"><span class="dir-chip dir-n">北边 N</span><span class="dir-chip dir-e">东边 E</span><span class="dir-chip dir-s">南边 S</span><span class="dir-chip dir-w">西边 W</span></div>
+            <span class="explain-mnemonic">平放的地图：上北下南，左西右东 → 红星在蓝球的右边，也就是东边。</span>
+          </div>
+          <span class="mini-pill">句型：A 在 B 的 ____边</span>
+        </div>
+
+        <section class="mode" id="flashMode">
+          <div class="mode-heading">
+            <div>
+              <h2>看图 · 说词</h2>
+              <p>Look · Say</p>
+            </div>
+            <div class="set-switch" role="group" aria-label="切换题目：东南西北或上下左右">
+              <button type="button" data-flash-set="compass" aria-pressed="true">🧭 东南西北<small>N · E · S · W</small></button>
+              <button type="button" data-flash-set="core" aria-pressed="false">↕ 上下左右<small>UP · DOWN · LEFT · RIGHT</small></button>
+            </div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="prompt-main" id="flashPrompt">红星在蓝球的哪一边？<span class="english-hint">Where is the red star? Look at the blue ball.</span></div>
+            <span class="step-pill" id="flashStep" hidden>第 1 / 2 步</span>
+          </div>
+          <div class="map-note" id="flashMapNote" hidden></div>
+
+          <div class="scene" id="flashScene" aria-label="位置关系示意图">
+            <div class="flash-object object-blue" id="flashReference" style="left:35%; top:50%;">🔵<span class="ref-tag">参照物</span><small>蓝球<i>BLUE BALL</i></small></div>
+            <div class="flash-object object-pink" id="flashTarget" style="left:65%; top:50%;">⭐<span class="ref-tag">参照物</span><small>红星<i>RED STAR</i></small></div>
+            <div class="map-layer" id="flashMap" hidden></div>
+          </div>
+
+          <div class="answer-grid" id="flashAnswers"></div>
+          <div class="feedback" id="flashFeedback" aria-live="polite">准备好了吗？先说，再按答案。</div>
+        </section>
+
+        <section class="mode" id="commandMode" hidden>
+          <div class="mode-heading">
+            <div>
+              <h2>拖动 · 摆放</h2>
+              <p>Drag · Place</p>
+            </div>
+            <div class="set-switch" role="group" aria-label="切换指令：上下左右或东南西北">
+              <button type="button" data-command-set="core" aria-pressed="true">↕ 上下左右<small>UP · DOWN · LEFT · RIGHT</small></button>
+              <button type="button" data-command-set="compass" aria-pressed="false">🧭 东南西北<small>N · E · S · W</small></button>
+            </div>
+          </div>
+
+          <div class="prompt-card">
+            <div class="prompt-main" id="commandPrompt">把红星放在蓝球的<em>右边</em>。<span class="english-hint">Put the red star on the right of the blue ball.</span></div>
+          </div>
+          <div class="map-note" id="commandMapNote" hidden></div>
+
+          <div class="scene command-scene" id="commandScene" aria-label="拖动红星到正确位置">
+            <div class="map-layer" id="commandMap" hidden></div>
+            <div class="command-object command-ref" id="commandReference" style="left:35%; top:50%;">🔵<span class="ref-tag">参照物</span><small>蓝球<i>BLUE BALL</i></small></div>
+            <div class="command-object command-target" id="commandTarget" style="left:68%; top:78%;" aria-label="可拖动的红星">⭐<span class="ref-tag">参照物</span><small>红星<i>RED STAR</i></small></div>
+          </div>
+
+          <div class="command-helper">
+            <span>拖动红星；放开后网页会判断关系。</span>
+            <button class="button-warm" id="newCommandButton" type="button">换一句</button>
+          </div>
+          <div class="feedback" id="commandFeedback" aria-live="polite">听清楚后再动手。</div>
+        </section>
+
+        <section class="mode" id="cameraMode" hidden>
+          <div class="mode-heading">
+            <div>
+              <h2>镜头 · 找位置</h2>
+              <p>Camera · 小组合作</p>
+            </div>
+            <span class="mini-pill">红卡 + 蓝卡</span>
+          </div>
+
+          <div class="camera-orientation-question" id="cameraOrientationQuestion">
+            <div>
+              <span class="camera-question-label">Question 0 · 不计分</span>
+              <strong>镜头画面里的左右，和我们站着看的左右一样吗？</strong>
+              <p>先比较现实中的红、蓝卡片，再看屏幕；本游戏一律以屏幕画面为准。</p>
+              <p class="camera-orientation-answer" id="cameraOrientationAnswer" hidden>课堂规则：看屏幕画面中的左边和右边，不看操作员的左手或右手。</p>
+            </div>
+            <button class="button-ghost" id="cameraOrientationButton" type="button">显示课堂规则</button>
+          </div>
+
+          <div class="prompt-card">
+            <div class="prompt-main" id="cameraPrompt">让红卡片在蓝卡片的<em>右边</em>。<span class="english-hint">Put red beside blue.</span></div>
+            <div class="prompt-note">使用两张纯色纸卡。</div>
+          </div>
+
+          <div class="camera-grid">
+            <div class="camera-shell">
+              <video id="cameraVideo" playsinline muted hidden></video>
+              <canvas id="cameraCanvas" aria-label="摄像头画面"></canvas>
+              <div class="camera-role-change" id="cameraRoleChange" aria-live="polite">参照物已改变</div>
+              <div class="camera-placeholder" id="cameraPlaceholder">
+                <div><strong>准备好红卡片和蓝卡片</strong><span>点击右侧“启动镜头”，浏览器会请求摄像头权限。</span></div>
+              </div>
+              <div class="camera-live-badge" id="cameraLiveBadge" hidden>
+                <div class="camera-live-caption">目前识别到</div>
+                <div class="camera-live-value" id="cameraLiveValue">等待中</div>
+                <div class="camera-live-sub" id="cameraLiveSub">把两张卡片放入画面</div>
+              </div>
+            </div>
+            <div class="camera-side">
+              <h3 id="cameraSideTitle">目标卡片在哪里？</h3>
+              <p>把红卡、蓝卡放入画面。网页只找颜色，不保存画面。</p>
+              <div class="camera-role-state" aria-live="polite">
+                <span class="role-badge reference" id="cameraReferenceBadge">蓝卡片 = 参照物</span>
+                <span class="role-badge target" id="cameraTargetBadge">红卡片 = 目标物</span>
+              </div>
+              <div class="camera-progress" aria-live="polite">
+                <div class="camera-progress-title" id="cameraProgressTitle">第1轮 · 蓝卡片是参照物</div>
+                <div class="camera-score-row">
+                  <span class="camera-score-chip">本轮答对 <strong id="cameraRoundScore">0/5</strong></span>
+                  <span class="camera-score-chip">总计 <strong id="cameraTotalScore">0题</strong></span>
+                </div>
+              </div>
+              <button class="button-primary" id="cameraStartButton" type="button">启动镜头</button>
+              <button class="button-ghost" id="cameraStopButton" type="button" disabled>停止镜头</button>
+              <button class="button-warm" id="newCameraButton" type="button">换词</button>
+              <div class="camera-round-complete" id="cameraRoundComplete" hidden>
+                <strong id="cameraRoundCompleteTitle">本轮完成：5 / 5</strong>
+                <span>小组说出完整句子后，再手动改变参照物。</span>
+                <button class="button-warm" id="cameraSwitchButton" type="button">切换参照物</button>
+              </div>
+              <div class="camera-result" id="cameraResult" aria-live="polite">镜头还没有启动。</div>
+              <div class="marker-instructions">
+                <div class="marker-row" id="cameraMarkerTarget"><span class="marker-dot marker-red"></span>红色卡片：目标物</div>
+                <div class="marker-row" id="cameraMarkerReference"><span class="marker-dot marker-blue"></span>蓝色卡片：参照物</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="bottom-note">
+          <span>学生先观察 · 小组讨论 · 轮流操作 · 说完整句子</span>
+          <span>快捷键：<span class="kbd">1–4</span> 选择答案</span>
+        </div>
+        <div class="success-toast" id="successToast" role="status" aria-live="assertive" hidden>
+          <div class="success-icon" aria-hidden="true">🎉</div>
+          <div><strong id="successTitle">答对了！</strong><span id="successLine">大家一起说！</span></div>
+        </div>
+        <div class="choral-check" id="choralCheck" role="dialog" aria-live="polite" hidden>
+          <div>
+            <div class="choral-check-label">大家一起说 · SAY TOGETHER</div>
+            <strong class="choral-check-sentence" id="choralSentence">红星在蓝球的右边。<small>Red star is on the right of the blue ball.</small></strong>
+          </div>
+          <button id="choralContinue" type="button">说完，点击继续<small>SAY DONE · NEXT</small></button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const coreWords = ["左边", "右边", "上面", "下面"];
+      const depthWords = ["前面", "后面"];
+      const compassWords = ["北边", "东边", "南边", "西边"];
+      const screenCycle = ["上面", "右边", "下面", "左边"];
+      const edgeForScreen = { "上面": "top", "右边": "right", "下面": "bottom", "左边": "left" };
+      const compassMeta = {
+        "北边": { cn: "北", letter: "N", cls: "dir-n" },
+        "东边": { cn: "东", letter: "E", cls: "dir-e" },
+        "南边": { cn: "南", letter: "S", cls: "dir-s" },
+        "西边": { cn: "西", letter: "W", cls: "dir-w" }
+      };
+      const englishWords = {
+        "左边": "LEFT", "右边": "RIGHT", "上面": "ABOVE", "下面": "BELOW",
+        "前面": "IN FRONT", "后面": "BEHIND", "东边": "EAST", "西边": "WEST",
+        "南边": "SOUTH", "北边": "NORTH"
+      };
+      const englishPhrases = {
+        "左边": "on the left of", "右边": "on the right of", "上面": "above",
+        "下面": "below", "前面": "in front of", "后面": "behind",
+        "东边": "east of", "西边": "west of", "南边": "south of", "北边": "north of"
+      };
+
+      const state = {
+        wordSet: "compass",
+        commandSet: "core",
+        score: 0,
+        streak: 0,
+        phase: "engage",
+        activeMode: "flash",
+        flashQuestion: null,
+        commandQuestion: null,
+        commandDragging: false,
+        commandPrevious: "",
+        northRotation: 0,
+        reverseEnabled: true,
+        cameraQuestion: null,
+        cameraStream: null,
+        cameraFrame: null,
+        cameraSolved: false,
+        cameraStableRelation: null,
+        cameraStableSince: 0,
+        cameraNextTimer: null,
+        cameraReference: "blue",
+        cameraRound: 1,
+        cameraRoundSize: 5,
+        cameraRoundSolved: 0,
+        cameraTotalSolved: 0,
+        cameraAwaitingSwitch: false,
+        cameraRoleTimer: null,
+        flashQueue: [],
+        flashQueueSet: "",
+        awaitingNext: false,
+        nextAction: null,
+        flashLocked: false,
+        commandLocked: false,
+        soundEnabled: true,
+        soundContext: null,
+        successTimer: null
+      };
+
+      const $ = (selector) => document.querySelector(selector);
+      const $$ = (selector) => [...document.querySelectorAll(selector)];
+      const pick = (list) => list[Math.floor(Math.random() * list.length)];
+
+      function setStatus(message) {
+        $("#appStatus").textContent = message;
+      }
+
+      function hideSuccess() {
+        const toast = $("#successToast");
+        if (!toast) return;
+        toast.hidden = true;
+        toast.classList.remove("show");
+      }
+
+      function hideChoralPrompt() {
+        const prompt = $("#choralCheck");
+        if (!prompt) return;
+        prompt.hidden = true;
+        state.awaitingNext = false;
+        state.nextAction = null;
+      }
+
+      function showChoralPrompt(sentence, englishSentence, nextAction) {
+        const prompt = $("#choralCheck");
+        if (!prompt) return;
+        $("#choralSentence").innerHTML = `${sentence}<small>${englishSentence}</small>`;
+        state.awaitingNext = true;
+        state.nextAction = nextAction;
+        prompt.hidden = false;
+        $("#choralContinue").focus({ preventScroll: true });
+      }
+
+      function continueAfterChoral() {
+        if (!state.awaitingNext) return;
+        const nextAction = state.nextAction;
+        hideChoralPrompt();
+        if (typeof nextAction === "function") nextAction();
+      }
+
+      function playCorrectSound() {
+        if (!state.soundEnabled) return;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        if (!state.soundContext) state.soundContext = new AudioContext();
+        const context = state.soundContext;
+        if (context.state === "suspended") context.resume();
+        const start = context.currentTime;
+        [523.25, 659.25, 783.99].forEach((frequency, index) => {
+          const oscillator = context.createOscillator();
+          const gain = context.createGain();
+          const time = start + index * .09;
+          oscillator.type = "sine";
+          oscillator.frequency.value = frequency;
+          gain.gain.setValueAtTime(.0001, time);
+          gain.gain.exponentialRampToValueAtTime(.16, time + .025);
+          gain.gain.exponentialRampToValueAtTime(.0001, time + .22);
+          oscillator.connect(gain).connect(context.destination);
+          oscillator.start(time);
+          oscillator.stop(time + .24);
+        });
+      }
+
+      function showSuccess(celebration) {
+        const toast = $("#successToast");
+        if (!toast) return;
+        if (state.successTimer) clearTimeout(state.successTimer);
+        $("#successTitle").textContent = "答对了！";
+        $("#successLine").textContent = celebration || "太棒了！";
+        toast.hidden = false;
+        toast.classList.remove("show");
+        void toast.offsetWidth;
+        toast.classList.add("show");
+        state.successTimer = setTimeout(hideSuccess, 1250);
+      }
+
+      function rewardCorrect(messageElement, message) {
+        recordCorrect(messageElement, message);
+        showSuccess("太棒了！先停一下，小组一起说。");
+        playCorrectSound();
+      }
+
+      function toggleSound() {
+        state.soundEnabled = !state.soundEnabled;
+        const button = $("#soundButton");
+        button.setAttribute("aria-pressed", String(state.soundEnabled));
+        button.textContent = state.soundEnabled ? "🔊 声音开" : "🔇 声音关";
+        setStatus(state.soundEnabled ? "声音已打开" : "声音已关闭");
+      }
+
+      function updateScore() {
+        $("#scoreValue").textContent = state.score;
+        $("#streakValue").textContent = state.streak;
+      }
+
+      function recordCorrect(messageElement, message) {
+        state.score += 1;
+        state.streak += 1;
+        updateScore();
+        messageElement.textContent = message;
+        messageElement.className = "feedback good";
+      }
+
+      function recordWrong(messageElement, message) {
+        state.streak = 0;
+        updateScore();
+        messageElement.textContent = message;
+        messageElement.className = "feedback warn";
+      }
+
+      function cameraRoleLabels() {
+        const referenceIsBlue = state.cameraReference === "blue";
+        return {
+          reference: {
+            name: referenceIsBlue ? "蓝卡片" : "红卡片",
+            english: referenceIsBlue ? "blue card" : "red card",
+            colorClass: referenceIsBlue ? "role-blue" : "role-red",
+            markerClass: referenceIsBlue ? "marker-blue" : "marker-red"
+          },
+          target: {
+            name: referenceIsBlue ? "红卡片" : "蓝卡片",
+            english: referenceIsBlue ? "red card" : "blue card",
+            colorClass: referenceIsBlue ? "role-red" : "role-blue",
+            markerClass: referenceIsBlue ? "marker-red" : "marker-blue"
+          }
+        };
+      }
+
+      function cameraSentence(relation) {
+        const labels = cameraRoleLabels();
+        return {
+          chinese: `${labels.target.name}在${labels.reference.name}的${relation}。`,
+          english: `${labels.target.english} is ${englishPhrases[relation]} the ${labels.reference.english}.`
+        };
+      }
+
+      function updateCameraProgress() {
+        const labels = cameraRoleLabels();
+        const progressTitle = $("#cameraProgressTitle");
+        if (!progressTitle) return;
+        progressTitle.textContent = `第${state.cameraRound}轮 · ${labels.reference.name}是参照物`;
+        $("#cameraRoundScore").textContent = `${state.cameraRoundSolved}/${state.cameraRoundSize}`;
+        $("#cameraTotalScore").textContent = `${state.cameraTotalSolved}题`;
+        $("#cameraReferenceBadge").textContent = `${labels.reference.name} = 参照物`;
+        $("#cameraReferenceBadge").className = `role-badge reference ${labels.reference.colorClass}`;
+        $("#cameraTargetBadge").textContent = `${labels.target.name} = 目标物`;
+        $("#cameraTargetBadge").className = `role-badge target ${labels.target.colorClass}`;
+        $("#cameraSideTitle").textContent = `${labels.target.name}在哪里？`;
+        $("#cameraMarkerTarget").innerHTML = `<span class="marker-dot ${labels.target.markerClass}"></span>${labels.target.name}：目标物`;
+        $("#cameraMarkerReference").innerHTML = `<span class="marker-dot ${labels.reference.markerClass}"></span>${labels.reference.name}：参照物`;
+        $("#cameraRoundCompleteTitle").textContent = `本轮完成：${state.cameraRoundSolved} / ${state.cameraRoundSize}`;
+        $("#cameraRoundComplete").hidden = !state.cameraAwaitingSwitch;
+        $("#newCameraButton").disabled = state.cameraAwaitingSwitch;
+      }
+
+      function renderCameraPrompt(relation) {
+        const labels = cameraRoleLabels();
+        $("#cameraPrompt").innerHTML = `让<span class="role-text ${labels.target.colorClass}">${labels.target.name}</span>在<span class="role-text ${labels.reference.colorClass}">${labels.reference.name}<small>参照物</small></span>的<em>${relation}</em>。<span class="english-hint">Put the ${labels.target.english} ${englishPhrases[relation]} the ${labels.reference.english}.</span>`;
+        updateCameraProgress();
+      }
+
+      function showCameraRoleChange() {
+        const labels = cameraRoleLabels();
+        const banner = $("#cameraRoleChange");
+        if (!banner) return;
+        if (state.cameraRoleTimer) clearTimeout(state.cameraRoleTimer);
+        banner.textContent = `参照物已改变：${labels.reference.name}现在是参照物`;
+        banner.classList.remove("show");
+        void banner.offsetWidth;
+        banner.classList.add("show");
+        state.cameraRoleTimer = setTimeout(() => banner.classList.remove("show"), 2600);
+      }
+
+      function rewardCameraCorrect(messageElement, message) {
+        recordCorrect(messageElement, message);
+        state.cameraRoundSolved += 1;
+        state.cameraTotalSolved += 1;
+        updateCameraProgress();
+        showSuccess("太棒了！先停一下，小组一起说。");
+        playCorrectSound();
+      }
+
+      function completeCameraRound() {
+        state.cameraAwaitingSwitch = true;
+        state.cameraQuestion = null;
+        state.cameraSolved = true;
+        updateCameraProgress();
+        $("#cameraResult").textContent = `本轮完成：${state.cameraRoundSolved}/${state.cameraRoundSize}。小组说出完整句子后再继续。`;
+        $("#cameraResult").className = "camera-result good";
+        setCameraLive(`✓ ${state.cameraRoundSolved}/${state.cameraRoundSize}`, "本轮完成，准备手动切换参照物。", "good");
+        setStatus("本轮完成：等待切换参照物");
+      }
+
+      function switchCameraReference() {
+        if (!state.cameraAwaitingSwitch) return;
+        state.cameraReference = state.cameraReference === "blue" ? "red" : "blue";
+        state.cameraRound += 1;
+        state.cameraRoundSolved = 0;
+        state.cameraAwaitingSwitch = false;
+        state.cameraSolved = false;
+        showCameraRoleChange();
+        updateCameraProgress();
+        newCameraQuestion();
+        setStatus("参照物已改变：继续观察镜头画面");
+      }
+
+      function resetCameraProgress() {
+        state.cameraReference = "blue";
+        state.cameraRound = 1;
+        state.cameraRoundSolved = 0;
+        state.cameraTotalSolved = 0;
+        state.cameraAwaitingSwitch = false;
+        state.cameraSolved = false;
+        const answer = $("#cameraOrientationAnswer");
+        if (answer) answer.hidden = true;
+        const banner = $("#cameraRoleChange");
+        if (banner) banner.classList.remove("show");
+        updateCameraProgress();
+        newCameraQuestion();
+      }
+
+      function shuffled(list) {
+        const copy = [...list];
+        for (let index = copy.length - 1; index > 0; index -= 1) {
+          const other = Math.floor(Math.random() * (index + 1));
+          [copy[index], copy[other]] = [copy[other], copy[index]];
+        }
+        return copy;
+      }
+
+      /* ---------- 方向换算：屏幕上的上下左右 ↔ 地图上的东南西北 ---------- */
+      function isCompass(word) { return compassWords.includes(word); }
+
+      function compassOf(screen) {
+        const index = screenCycle.indexOf(screen);
+        return compassWords[(index - state.northRotation + 4) % 4];
+      }
+
+      function screenOf(compass) {
+        const index = compassWords.indexOf(compass);
+        return screenCycle[(index + state.northRotation) % 4];
+      }
+
+      function oppositeOf(word) {
+        if (word === "前面") return "后面";
+        if (word === "后面") return "前面";
+        const list = isCompass(word) ? compassWords : screenCycle;
+        return list[(list.indexOf(word) + 2) % 4];
+      }
+
+      function wordHtml(word) {
+        if (isCompass(word)) return `<em class="dir-word ${compassMeta[word].cls}">${word}</em>`;
+        return `<em>${word}</em>`;
+      }
+
+      const roleHtml = {
+        red: `<span class="role-text role-red">红星</span>`,
+        blue: `<span class="role-text role-blue">蓝球</span>`,
+        redRef: `<span class="role-text role-red">红星<small>参照物</small></span>`,
+        blueRef: `<span class="role-text role-blue">蓝球<small>参照物</small></span>`
+      };
+
+      function renderMapLayer(layerSelector, noteSelector, visible) {
+        const layer = $(layerSelector);
+        const note = $(noteSelector);
+        layer.hidden = !visible;
+        note.hidden = !visible;
+        if (!visible) return;
+        const labels = compassWords.map((word) => {
+          const meta = compassMeta[word];
+          return `<div class="edge-label edge-${edgeForScreen[screenOf(word)]} ${meta.cls}">${meta.cn}<i>${meta.letter}</i></div>`;
+        }).join("");
+        const arrow = `<div class="north-arrow" aria-label="北的箭头"><div class="north-arrow-dial"><svg viewBox="-30 -30 60 60" aria-hidden="true" style="transform:rotate(${state.northRotation * 90}deg)"><path d="M0 -26 L12 4 L0 -2 L-12 4 Z" fill="#D3402F"/><path d="M0 26 L12 4 L0 -2 L-12 4 Z" fill="#b7c8dc"/><circle r="3" fill="#13233f"/></svg></div><span class="north-arrow-caption">北 N</span></div>`;
+        layer.innerHTML = labels + arrow;
+        note.classList.toggle("challenge", state.northRotation !== 0);
+        note.innerHTML = state.northRotation
+          ? "⚠ 挑战：北不在上面！先找北的箭头，再说方向。"
+          : "🗺 这是一张平放的地图：上北下南，左西右东";
+      }
+
+      /* ---------- 看图选词：题目 ---------- */
+      function questionPool() {
+        const make = (type, list) => list.map((word) => ({ type, word }));
+        if (state.wordSet === "compass") return make("compass", compassWords);
+        if (state.wordSet === "dual") return make("dual", coreWords);
+        if (state.wordSet === "depth") return make("depth", depthWords);
+        if (state.wordSet === "all") return [...make("core", coreWords), ...make("compass", compassWords), ...make("dual", coreWords)];
+        return make("core", coreWords);
+      }
+
+      function nextFlashItem() {
+        const key = `${state.wordSet}|${state.northRotation}`;
+        if (state.flashQueueSet !== key) {
+          state.flashQueue = [];
+          state.flashQueueSet = key;
+        }
+        if (!state.flashQueue.length) state.flashQueue = shuffled(questionPool());
+        return state.flashQueue.shift();
+      }
+
+      function buildFlashQuestion(item) {
+        const screen = item.type === "compass" ? screenOf(item.word) : item.word;
+        const steps = [];
+        if (item.type === "compass") steps.push({ kind: "compass", answer: item.word });
+        else steps.push({ kind: "screen", answer: screen });
+        if (item.type === "dual") steps.push({ kind: "link", answer: compassOf(screen) });
+        if (state.reverseEnabled) {
+          const last = steps[steps.length - 1];
+          steps.push({ kind: last.kind === "screen" ? "screen" : "compass", reversed: true, answer: oppositeOf(last.answer) });
+        }
+        return { type: item.type, screen, steps, stepIndex: 0 };
+      }
+
+      function relationToPlacement(relation) {
+        const placements = {
+          "左边": { reference: [66, 50], target: [34, 50] },
+          "右边": { reference: [34, 50], target: [66, 50] },
+          "上面": { reference: [50, 69], target: [50, 31] },
+          "下面": { reference: [50, 31], target: [50, 69] },
+          "前面": { reference: [46, 54], target: [55, 46] },
+          "后面": { reference: [55, 46], target: [46, 54] }
+        };
+        return placements[relation] || placements["右边"];
+      }
+
+      function renderWordButtons() {
+        $$(".word-chip").forEach((button) => {
+          button.classList.toggle("active", button.dataset.set === state.wordSet);
+        });
+        $$("[data-flash-set]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.flashSet === state.wordSet));
+        });
+        $$("[data-command-set]").forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.commandSet === state.commandSet));
+        });
+      }
+
+      function chooseCommandSet(setName) {
+        if (state.commandSet === setName) return;
+        state.commandSet = setName;
+        state.commandPrevious = "";
+        renderWordButtons();
+        newCommandQuestion();
+        setStatus(`拖动摆放：${setName === "compass" ? "东南西北" : "上下左右"}`);
+      }
+
+      function renderFlashAnswers(words) {
+        const container = $("#flashAnswers");
+        container.classList.toggle("dense", words.length > 4);
+        container.innerHTML = words.map((word) => {
+          if (isCompass(word)) {
+            const meta = compassMeta[word];
+            return `<button class="answer-button dir-btn ${meta.cls}" data-answer="${word}" type="button" aria-label="选择${word}"><span class="word-cn">${word}</span><span class="word-en">${meta.letter} · ${englishWords[word]}</span></button>`;
+          }
+          return `<button class="answer-button" data-answer="${word}" type="button" aria-label="选择${word}"><span class="word-cn">${word}</span><span class="word-en">${englishWords[word]}</span></button>`;
+        }).join("");
+        $$("#flashAnswers .answer-button").forEach((button) => {
+          button.addEventListener("click", () => answerFlash(button.dataset.answer, button));
+        });
+      }
+
+      function setObject(object, position) {
+        object.style.left = `${position[0]}%`;
+        object.style.top = `${position[1]}%`;
+      }
+
+      function renderFlashQuestion() {
+        hideChoralPrompt();
+        hideSuccess();
+        const question = buildFlashQuestion(nextFlashItem());
+        state.flashQuestion = question;
+        const relation = question.screen;
+        const placement = relationToPlacement(relation);
+        setObject($("#flashReference"), placement.reference);
+        setObject($("#flashTarget"), placement.target);
+        $("#flashReference").style.zIndex = relation === "前面" ? "2" : "3";
+        $("#flashTarget").style.zIndex = relation === "前面" ? "4" : relation === "后面" ? "2" : "3";
+        $("#flashReference").style.transform = relation === "后面" ? "translate(-50%, -50%) scale(1.12)" : "translate(-50%, -50%)";
+        $("#flashTarget").style.transform = relation === "前面" ? "translate(-50%, -50%) scale(1.12)" : "translate(-50%, -50%)";
+        $("#flashFeedback").textContent = "准备好了吗？先说，再按答案。";
+        $("#flashFeedback").className = "feedback";
+        renderFlashStep();
+      }
+
+      function renderFlashStep() {
+        const question = state.flashQuestion;
+        const step = question.steps[question.stepIndex];
+        state.flashLocked = false;
+        renderMapLayer("#flashMap", "#flashMapNote", step.kind !== "screen");
+        const reversed = Boolean(step.reversed);
+        $("#flashReference").classList.toggle("is-reference", !reversed);
+        $("#flashTarget").classList.toggle("is-reference", reversed);
+        $$("#flashScene .flash-object").forEach((object) => object.classList.remove("ref-flash"));
+        if (reversed) {
+          void $("#flashTarget").offsetWidth;
+          $("#flashTarget").classList.add("ref-flash");
+        }
+
+        let main;
+        let english;
+        if (reversed) {
+          main = `换参照物：${roleHtml.blue}在${roleHtml.redRef}的哪一边？`;
+          english = "Now the red star is the reference. Where is the blue ball?";
+        } else if (step.kind === "compass") {
+          main = `看方向：${roleHtml.red}在${roleHtml.blueRef}的哪一边？`;
+          english = "Look at the map directions. Where is the red star from the blue ball?";
+        } else if (step.kind === "link") {
+          main = `${roleHtml.red}在${roleHtml.blueRef}的${wordHtml(question.steps[0].answer)}。看地图方向，那是哪一边？`;
+          english = "Now look at the map. Which direction is that?";
+        } else {
+          main = `${roleHtml.red}在${roleHtml.blueRef}的哪一边？`;
+          english = "Where is the red star? Look at the blue ball.";
+        }
+        $("#flashPrompt").innerHTML = `${main}<span class="english-hint">${english}</span>`;
+
+        const stepPill = $("#flashStep");
+        stepPill.hidden = question.steps.length < 2;
+        stepPill.textContent = `第 ${question.stepIndex + 1} / ${question.steps.length} 步`;
+
+        let words = coreWords;
+        if (step.kind !== "screen") words = compassWords;
+        else if (question.type === "depth") words = depthWords;
+        renderFlashAnswers(words);
+      }
+
+      function stepSentence(question, step, answer) {
+        if (step.reversed) return `蓝球在红星的${answer}。`;
+        if (step.kind === "link") return `红星在蓝球的${question.steps[0].answer}，也就是${answer}。`;
+        return `红星在蓝球的${answer}。`;
+      }
+
+      function finalSentence(question) {
+        const forward = question.steps.filter((step) => !step.reversed);
+        const reverse = question.steps.find((step) => step.reversed);
+        let chinese;
+        let english;
+        if (question.type === "dual") {
+          chinese = `红星在蓝球的${forward[0].answer}，也就是${forward[1].answer}。`;
+          english = `The red star is ${englishPhrases[forward[0].answer]} the blue ball — that is ${englishPhrases[forward[1].answer]} it.`;
+        } else {
+          chinese = `红星在蓝球的${forward[0].answer}。`;
+          english = `The red star is ${englishPhrases[forward[0].answer]} the blue ball.`;
+        }
+        let html = chinese;
+        let plain = chinese;
+        if (reverse) {
+          html += `<br>蓝球在红星的${reverse.answer}。`;
+          plain += `蓝球在红星的${reverse.answer}。`;
+          english += ` The blue ball is ${englishPhrases[reverse.answer]} the red star.`;
+        }
+        return { html, plain, english };
+      }
+
+      function flashHint(step) {
+        if (step.reversed) return "现在红星是参照物：站在红星那里看，蓝球在哪一边？";
+        if (step.kind === "link") return state.northRotation ? "北不在上面！先找北的箭头，再看四边的方向字。" : "看四边的方向字：上北下南，左西右东。";
+        if (step.kind === "compass") return state.northRotation ? "先找北的箭头：这次北在右边哦。" : "念口诀：上北下南，左西右东。";
+        return "再看一次：先找蓝球，红星在蓝球的哪一边？";
+      }
+
+      function answerFlash(answer, button) {
+        const question = state.flashQuestion;
+        if (!question || state.flashLocked) return;
+        const step = question.steps[question.stepIndex];
+        const feedback = $("#flashFeedback");
+        if (answer !== step.answer) {
+          button.classList.add("wrong");
+          recordWrong(feedback, flashHint(step));
+          setTimeout(() => button.classList.remove("wrong"), 650);
+          return;
+        }
+        state.flashLocked = true;
+        button.classList.add("correct");
+        $$("#flashAnswers .answer-button").forEach((answerButton) => { answerButton.disabled = true; });
+        if (question.stepIndex < question.steps.length - 1) {
+          const nextStep = question.steps[question.stepIndex + 1];
+          const nextHint = nextStep.reversed ? "下一步：换参照物！" : "下一步：看地图方向！";
+          feedback.textContent = `对！${stepSentence(question, step, answer)}${nextHint}`;
+          feedback.className = "feedback good";
+          playCorrectSound();
+          setTimeout(() => {
+            if (state.flashQuestion !== question) return;
+            question.stepIndex += 1;
+            renderFlashStep();
+          }, 1300);
+          return;
+        }
+        const sentence = finalSentence(question);
+        rewardCorrect(feedback, `答对了！${sentence.plain}`);
+        setStatus("答对了！小组一起说");
+        showChoralPrompt(sentence.html, sentence.english, renderFlashQuestion);
+      }
+
+      /* ---------- 拖动摆放 ---------- */
+      function commandPool() {
+        return state.commandSet === "compass" ? compassWords : coreWords;
+      }
+
+      function newCommandQuestion() {
+        const pool = commandPool();
+        let relation = pick(pool);
+        while (pool.length > 1 && relation === state.commandPrevious) relation = pick(pool);
+        state.commandPrevious = relation;
+        state.commandQuestion = { relation };
+        state.commandLocked = false;
+        hideChoralPrompt();
+        hideSuccess();
+        const compass = isCompass(relation);
+        const english = compass ? "Look at the map directions." : "";
+        $("#commandPrompt").innerHTML = `把${roleHtml.red}放在${roleHtml.blueRef}的${wordHtml(relation)}。<span class="english-hint">Put the red star ${englishPhrases[relation]} the blue ball. ${english}</span>`;
+        renderMapLayer("#commandMap", "#commandMapNote", compass);
+        $("#commandReference").classList.add("is-reference");
+        setObject($("#commandReference"), [35, 50]);
+        setObject($("#commandTarget"), [68, 78]);
+        $("#commandFeedback").textContent = compass ? "先看方向字，再动手。" : "听清楚后再动手。";
+        $("#commandFeedback").className = "feedback";
+      }
+
+      function pointToDirection(dx, dy) {
+        if (Math.max(Math.abs(dx), Math.abs(dy)) < 12) return null;
+        if (Math.abs(dx) >= Math.abs(dy)) return dx < 0 ? "左边" : "右边";
+        return dy < 0 ? "上面" : "下面";
+      }
+
+      function commandRelation() {
+        /* 用最终的百分比位置判断，不受移动动画影响 */
+        const reference = $("#commandReference");
+        const target = $("#commandTarget");
+        const dx = parseFloat(target.style.left) - parseFloat(reference.style.left);
+        const dy = parseFloat(target.style.top) - parseFloat(reference.style.top);
+        return pointToDirection(dx, dy);
+      }
+
+      function moveCommandTarget(event) {
+        if (!state.commandDragging) return;
+        const scene = $("#commandScene");
+        const rect = scene.getBoundingClientRect();
+        const x = Math.max(10, Math.min(90, ((event.clientX - rect.left) / rect.width) * 100));
+        const y = Math.max(13, Math.min(87, ((event.clientY - rect.top) / rect.height) * 100));
+        setObject($("#commandTarget"), [x, y]);
+      }
+
+      function endCommandDrag() {
+        if (!state.commandDragging || state.commandLocked) return;
+        state.commandDragging = false;
+        $("#commandTarget").classList.remove("dragging");
+        const expected = state.commandQuestion.relation;
+        const screen = commandRelation();
+        const actual = screen && isCompass(expected) ? compassOf(screen) : screen;
+        if (!actual) {
+          recordWrong($("#commandFeedback"), "两个物体太近了，再拉开一点。先说：红星在蓝球的……");
+        } else if (actual === expected) {
+          state.commandLocked = true;
+          const sentence = `红星在蓝球的${expected}。`;
+          const englishSentence = `The red star is ${englishPhrases[expected]} the blue ball.`;
+          rewardCorrect($("#commandFeedback"), `非常好！${sentence}`);
+          setStatus("答对了！小组一起说");
+          showChoralPrompt(sentence, englishSentence, newCommandQuestion);
+        } else {
+          const tip = isCompass(expected) ? (state.northRotation ? "先找北的箭头。" : "上北下南，左西右东。") : "";
+          recordWrong($("#commandFeedback"), `现在是“${actual}”。题目要求红星在蓝球的“${expected}”。${tip}`);
+        }
+      }
+
+      function setupCommandDrag() {
+        const target = $("#commandTarget");
+        target.addEventListener("pointerdown", (event) => {
+          state.commandDragging = true;
+          target.classList.add("dragging");
+          target.setPointerCapture(event.pointerId);
+          event.preventDefault();
+        });
+        target.addEventListener("pointermove", moveCommandTarget);
+        target.addEventListener("pointerup", endCommandDrag);
+        target.addEventListener("pointercancel", endCommandDrag);
+      }
+
+      function showMode(mode, updateStatus = true) {
+        state.activeMode = mode;
+        hideChoralPrompt();
+        $$(".mode-tab").forEach((button) => button.classList.toggle("active", button.dataset.mode === mode));
+        $$(".mode").forEach((section) => { section.hidden = section.id !== `${mode}Mode`; });
+        if (updateStatus) {
+          if (mode === "camera") setStatus("红卡 + 蓝卡：找位置");
+          else setStatus(mode === "flash" ? "看图，说词" : "拖动红星，说句子");
+        }
+      }
+
+      function resetScore() {
+        state.score = 0;
+        state.streak = 0;
+        updateScore();
+        resetCameraProgress();
+        $("#flashFeedback").textContent = "记录已经清零，准备开始。";
+        $("#flashFeedback").className = "feedback";
+        $("#commandFeedback").textContent = "记录已经清零，准备开始。";
+        $("#commandFeedback").className = "feedback";
+        hideSuccess();
+        hideChoralPrompt();
+      }
+
+      function chooseWordSet(setName) {
+        state.wordSet = setName;
+        state.flashQueue = [];
+        state.flashQueueSet = "";
+        renderWordButtons();
+        renderFlashQuestion();
+        const labels = { core: "上下左右", depth: "前后词", compass: "东南西北", dual: "两种说法", all: "全部" };
+        setStatus(`正在练习：${labels[setName]}`);
+      }
+
+      function renderToggles() {
+        const reverse = $("#reverseToggle");
+        reverse.setAttribute("aria-pressed", String(state.reverseEnabled));
+        reverse.querySelector("b").textContent = state.reverseEnabled ? "开" : "关";
+        const challenge = $("#challengeToggle");
+        challenge.setAttribute("aria-pressed", String(state.northRotation !== 0));
+        challenge.querySelector("b").textContent = state.northRotation ? "开" : "关";
+      }
+
+      function toggleReverse() {
+        state.reverseEnabled = !state.reverseEnabled;
+        renderToggles();
+        renderFlashQuestion();
+        setStatus(state.reverseEnabled ? "反问已开启：答完再换参照物" : "反问已关闭");
+      }
+
+      function toggleChallenge() {
+        state.northRotation = state.northRotation ? 0 : 1;
+        renderToggles();
+        renderFlashQuestion();
+        newCommandQuestion();
+        setStatus(state.northRotation ? "挑战开启：北不在上面！" : "挑战关闭：上北下南");
+      }
+
+      function openFullscreen() {
+        const element = document.documentElement;
+        if (!document.fullscreenElement && element.requestFullscreen) element.requestFullscreen();
+        else if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen();
+      }
+
+      const phaseConfig = {
+        engage: {
+          label: "ENGAGE",
+          title: "先猜，再说",
+          text: "学生先用手势或语言描述位置：先上下左右，再东南西北。",
+          tool: "闪电判断",
+          mode: "flash",
+          status: "Engage：先说出你看到的关系"
+        },
+        explore: {
+          label: "EXPLORE",
+          title: "让物体动起来",
+          text: "学生拖动红星：先按上下左右摆放，再自己切换到东南西北指令，讨论两种说法。",
+          tool: "指挥摆放",
+          mode: "command",
+          status: "Explore：先操作，再和同伴讨论"
+        },
+        explain: {
+          label: "EXPLAIN",
+          title: "把看到的关系说成数学词汇",
+          text: "先找参照物，再用句型说出：A 在 B 的____边。用「两种说法」把右边连到东边：上北下南，左西右东。",
+          tool: "词汇小结",
+          mode: "flash",
+          status: "Explain：学生整理位置词和完整句型"
+        },
+        elaborate: {
+          label: "ELABORATE",
+          title: "把词汇带到真实场景",
+          text: "学生先回答镜头左右问题；小组以蓝卡片为参照物完成5题，再手动切换参照物。",
+          tool: "镜头实验",
+          mode: "camera",
+          status: "Elaborate：学生把词汇应用到真实物体"
+        },
+        evaluate: {
+          label: "EVALUATE",
+          title: "用证据检查学习",
+          text: "用「全部」完成 5 题口头小测（含换参照物反问），记录学生能否独立说出完整句子。",
+          tool: "闪电判断",
+          mode: "flash",
+          status: "Evaluate：学生完成 5 题并记录表现"
+        }
+      };
+
+      function showPhase(phase) {
+        const config = phaseConfig[phase] || phaseConfig.engage;
+        state.phase = phase;
+        $$(".fivee-step").forEach((button) => button.classList.toggle("active", button.dataset.phase === phase));
+        $("#phaseTag").textContent = config.label;
+        $("#phaseTitle").textContent = config.title;
+        $("#phaseText").textContent = config.text;
+        $("#phaseTool").textContent = config.tool;
+        $("#explainGuide").hidden = phase !== "explain";
+        const teacherPhaseStatus = $("#teacherPhaseStatus");
+        if (teacherPhaseStatus) teacherPhaseStatus.textContent = `当前学习：${config.label} · ${config.title}`;
+        showMode(config.mode, false);
+        setStatus(config.status);
+      }
+
+      function newCameraQuestion() {
+        if (state.cameraAwaitingSwitch) return;
+        if (state.cameraNextTimer) clearTimeout(state.cameraNextTimer);
+        const relation = pick(coreWords);
+        state.cameraQuestion = { relation };
+        state.cameraSolved = false;
+        state.cameraStableRelation = null;
+        state.cameraStableSince = 0;
+        hideChoralPrompt();
+        hideSuccess();
+        renderCameraPrompt(relation);
+        $("#cameraResult").textContent = "等待识别红卡片和蓝卡片……";
+        $("#cameraResult").className = "camera-result";
+        $("#cameraLiveBadge").className = "camera-live-badge";
+        $("#cameraLiveValue").textContent = "等待中";
+        const labels = cameraRoleLabels();
+        $("#cameraLiveSub").textContent = `目标：${relation} · ${labels.reference.name}是参照物`;
+        updateCameraProgress();
+      }
+
+      function setCameraLive(value, sub, style = "") {
+        const badge = $("#cameraLiveBadge");
+        badge.className = `camera-live-badge ${style}`.trim();
+        $("#cameraLiveValue").textContent = value;
+        $("#cameraLiveSub").textContent = sub;
+      }
+
+      function stableCameraRelation(actual, now) {
+        if (!actual) {
+          state.cameraStableRelation = null;
+          state.cameraStableSince = 0;
+          return null;
+        }
+        if (state.cameraStableRelation !== actual) {
+          state.cameraStableRelation = actual;
+          state.cameraStableSince = now;
+          return null;
+        }
+        return now - state.cameraStableSince >= 450 ? actual : null;
+      }
+
+      function stopCamera() {
+        if (state.cameraFrame) cancelAnimationFrame(state.cameraFrame);
+        state.cameraFrame = null;
+        if (state.cameraNextTimer) clearTimeout(state.cameraNextTimer);
+        state.cameraNextTimer = null;
+        hideChoralPrompt();
+        hideSuccess();
+        if (state.cameraStream) state.cameraStream.getTracks().forEach((track) => track.stop());
+        state.cameraStream = null;
+        $("#cameraStartButton").disabled = false;
+        $("#cameraStopButton").disabled = true;
+        $("#cameraPlaceholder").hidden = false;
+        $("#cameraLiveBadge").hidden = true;
+        $("#cameraResult").textContent = "镜头已停止。";
+        $("#cameraResult").className = "camera-result";
+        const canvas = $("#cameraCanvas");
+        const context = canvas.getContext("2d");
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        setStatus("镜头已停止，可以继续使用点击模式");
+      }
+
+      async function startCamera() {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          $("#cameraResult").textContent = "这个浏览器没有可用的摄像头接口；请继续使用前两个模式。";
+          $("#cameraResult").className = "camera-result warn";
+          return;
+        }
+        try {
+          state.cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
+          const video = $("#cameraVideo");
+          video.srcObject = state.cameraStream;
+          await video.play();
+          $("#cameraStartButton").disabled = true;
+          $("#cameraStopButton").disabled = false;
+          $("#cameraPlaceholder").hidden = true;
+          $("#cameraLiveBadge").hidden = false;
+          setStatus("镜头运行中：移动红、蓝卡片");
+          newCameraQuestion();
+          cameraLoop();
+        } catch (error) {
+          $("#cameraResult").textContent = "无法启动镜头。请检查浏览器权限；也可以直接使用“闪电判断”和“指挥摆放”。";
+          $("#cameraResult").className = "camera-result warn";
+          setStatus("镜头未启动，点击模式仍可使用");
+        }
+      }
+
+      function colorBox(imageData, color) {
+        const { data, width, height } = imageData;
+        const stride = Math.max(4, Math.ceil(Math.max(width, height) / 260));
+        const gridWidth = Math.ceil(width / stride);
+        const gridHeight = Math.ceil(height / stride);
+        const mask = new Uint8Array(gridWidth * gridHeight);
+        const visited = new Uint8Array(mask.length);
+
+        function isTargetPixel(red, green, blue) {
+          const max = Math.max(red, green, blue) / 255;
+          const min = Math.min(red, green, blue) / 255;
+          const delta = max - min;
+          const saturation = max === 0 ? 0 : delta / max;
+          if (saturation < .4 || max < .22) return false;
+          let hue = 0;
+          if (delta !== 0) {
+            if (max === red / 255) hue = ((green - blue) / 255) / delta;
+            else if (max === green / 255) hue = 2 + ((blue - red) / 255) / delta;
+            else hue = 4 + ((red - green) / 255) / delta;
+            hue /= 6;
+            if (hue < 0) hue += 1;
+          }
+          if (color === "red") {
+            return (hue < .065 || hue > .94) && red > green * 1.2 && red > blue * 1.08;
+          }
+          return hue > .52 && hue < .74 && blue > red * 1.22 && blue > green * 1.02;
+        }
+
+        for (let gy = 0; gy < gridHeight; gy += 1) {
+          for (let gx = 0; gx < gridWidth; gx += 1) {
+            const x = Math.min(width - 1, gx * stride + Math.floor(stride / 2));
+            const y = Math.min(height - 1, gy * stride + Math.floor(stride / 2));
+            const index = (y * width + x) * 4;
+            if (isTargetPixel(data[index], data[index + 1], data[index + 2])) mask[gy * gridWidth + gx] = 1;
+          }
+        }
+
+        const components = [];
+        for (let start = 0; start < mask.length; start += 1) {
+          if (!mask[start] || visited[start]) continue;
+          const stack = [start];
+          visited[start] = 1;
+          let count = 0, minX = gridWidth, minY = gridHeight, maxX = -1, maxY = -1, sumX = 0, sumY = 0;
+          while (stack.length) {
+            const current = stack.pop();
+            const gx = current % gridWidth;
+            const gy = Math.floor(current / gridWidth);
+            count += 1;
+            minX = Math.min(minX, gx); maxX = Math.max(maxX, gx);
+            minY = Math.min(minY, gy); maxY = Math.max(maxY, gy);
+            sumX += gx; sumY += gy;
+            const neighbors = [[gx - 1, gy], [gx + 1, gy], [gx, gy - 1], [gx, gy + 1]];
+            for (const [nx, ny] of neighbors) {
+              if (nx < 0 || ny < 0 || nx >= gridWidth || ny >= gridHeight) continue;
+              const next = ny * gridWidth + nx;
+              if (mask[next] && !visited[next]) { visited[next] = 1; stack.push(next); }
+            }
+          }
+          const boxWidth = maxX - minX + 1;
+          const boxHeight = maxY - minY + 1;
+          const boxArea = boxWidth * boxHeight;
+          const fill = count / boxArea;
+          const widthRatio = boxWidth / gridWidth;
+          const heightRatio = boxHeight / gridHeight;
+          const aspectRatio = Math.max(boxWidth / boxHeight, boxHeight / boxWidth);
+          const touchesEdge = minX === 0 || minY === 0 || maxX === gridWidth - 1 || maxY === gridHeight - 1;
+          if (count < 35 || count > gridWidth * gridHeight * .30) continue;
+          if (fill < .18 || widthRatio > .58 || heightRatio > .58 || aspectRatio > 4.5) continue;
+          const score = count * Math.min(1, fill * 1.8) * (touchesEdge ? .25 : 1);
+          components.push({ score, count, minX, minY, maxX, maxY, centerX: sumX / count, centerY: sumY / count });
+        }
+
+        if (!components.length) return null;
+        components.sort((a, b) => b.score - a.score);
+        const best = components[0];
+        return {
+          x: best.centerX * stride,
+          y: best.centerY * stride,
+          minX: best.minX * stride,
+          minY: best.minY * stride,
+          maxX: Math.min(width, (best.maxX + 1) * stride),
+          maxY: Math.min(height, (best.maxY + 1) * stride),
+          count: best.count
+        };
+      }
+
+      function drawBox(context, box, label, color) {
+        if (!box) return;
+        context.save();
+        context.strokeStyle = color;
+        context.lineWidth = 5;
+        context.strokeRect(box.minX, box.minY, box.maxX - box.minX, box.maxY - box.minY);
+        context.fillStyle = color;
+        context.font = "800 32px sans-serif";
+        context.fillText(label, box.minX, Math.max(28, box.minY - 8));
+        context.restore();
+      }
+
+      function cameraLoop() {
+        const video = $("#cameraVideo");
+        const canvas = $("#cameraCanvas");
+        const context = canvas.getContext("2d", { willReadFrequently: true });
+        if (!state.cameraStream || video.readyState < 2) {
+          state.cameraFrame = requestAnimationFrame(cameraLoop);
+          return;
+        }
+        if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+          canvas.width = video.videoWidth || 640;
+          canvas.height = video.videoHeight || 480;
+        }
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const red = colorBox(imageData, "red");
+        const blue = colorBox(imageData, "blue");
+        const labels = cameraRoleLabels();
+        drawBox(context, red, state.cameraReference === "red" ? "红·参照" : "红·目标", "#ff7096");
+        drawBox(context, blue, state.cameraReference === "blue" ? "蓝·参照" : "蓝·目标", "#6eb5ff");
+        if (state.cameraSolved) {
+          state.cameraFrame = requestAnimationFrame(cameraLoop);
+          return;
+        }
+        const result = $("#cameraResult");
+        const now = performance.now();
+        if (!red || !blue) {
+          const missing = !red && !blue ? "红、蓝" : !red ? "红" : "蓝";
+          result.textContent = `还没有找到${missing}卡片。请把两张纯色卡片放入画面。`;
+          result.className = "camera-result";
+          state.cameraStableRelation = null;
+          state.cameraStableSince = 0;
+          setCameraLive("等待中", `请把${missing}卡片放入画面`);
+        } else {
+          const referenceBox = state.cameraReference === "blue" ? blue : red;
+          const targetBox = state.cameraReference === "blue" ? red : blue;
+          const dx = targetBox.x - referenceBox.x;
+          const dy = targetBox.y - referenceBox.y;
+          const actual = pointToDirection((dx / canvas.width) * 100, (dy / canvas.height) * 100);
+          if (!actual) {
+            result.textContent = "两张卡片太近了，请把它们分开一点。";
+            result.className = "camera-result warn";
+            stableCameraRelation(null, now);
+            setCameraLive("太近了", "请把两张卡片分开一点");
+          } else if (state.cameraQuestion) {
+            const stable = stableCameraRelation(actual, now);
+            const isTarget = actual === state.cameraQuestion.relation;
+            setCameraLive(actual, `目标：${state.cameraQuestion.relation} · ${labels.reference.name}是参照物 · ${stable ? "位置稳定" : "位置正在稳定…"}`, isTarget ? "candidate" : "");
+            if (!state.cameraSolved && stable && isTarget) {
+              state.cameraSolved = true;
+              const sentence = cameraSentence(actual);
+              rewardCameraCorrect(result, `答对了！${sentence.chinese}`);
+              result.className = "camera-result good";
+              setCameraLive(`✓ ${actual}`, "答对了！停一下，再说完整句子。", "good");
+              setStatus("答对了！小组一起说");
+              showChoralPrompt(sentence.chinese, sentence.english, () => {
+                if (state.cameraRoundSolved >= state.cameraRoundSize) completeCameraRound();
+                else if (state.cameraStream) newCameraQuestion();
+              });
+            } else if (!state.cameraSolved) {
+              result.textContent = `目前看到：${labels.target.name}在${labels.reference.name}的${actual}。目标是${state.cameraQuestion.relation}。`;
+              result.className = isTarget ? "camera-result warn" : "camera-result";
+            }
+          }
+        }
+        state.cameraFrame = requestAnimationFrame(cameraLoop);
+      }
+
+      $$(".mode-tab").forEach((button) => button.addEventListener("click", () => showMode(button.dataset.mode)));
+      $$(".fivee-step").forEach((button) => button.addEventListener("click", () => showPhase(button.dataset.phase)));
+      $$(".word-chip").forEach((button) => button.addEventListener("click", () => chooseWordSet(button.dataset.set)));
+      $$("[data-flash-set]").forEach((button) => button.addEventListener("click", () => { if (state.wordSet !== button.dataset.flashSet) chooseWordSet(button.dataset.flashSet); }));
+      $$("[data-command-set]").forEach((button) => button.addEventListener("click", () => chooseCommandSet(button.dataset.commandSet)));
+      $("#soundButton").addEventListener("click", toggleSound);
+      $("#choralContinue").addEventListener("click", continueAfterChoral);
+      $("#fullscreenButton").addEventListener("click", openFullscreen);
+      $("#resetButton").addEventListener("click", resetScore);
+      $("#reverseToggle").addEventListener("click", toggleReverse);
+      $("#challengeToggle").addEventListener("click", toggleChallenge);
+      $("#newCommandButton").addEventListener("click", newCommandQuestion);
+      $("#cameraStartButton").addEventListener("click", startCamera);
+      $("#cameraStopButton").addEventListener("click", stopCamera);
+      $("#newCameraButton").addEventListener("click", newCameraQuestion);
+      $("#cameraSwitchButton").addEventListener("click", switchCameraReference);
+      $("#cameraOrientationButton").addEventListener("click", () => {
+        const answer = $("#cameraOrientationAnswer");
+        answer.hidden = !answer.hidden;
+        $("#cameraOrientationButton").textContent = answer.hidden ? "显示课堂规则" : "收起课堂规则";
+      });
+      window.addEventListener("beforeunload", stopCamera);
+      document.addEventListener("keydown", (event) => {
+        if (state.activeMode !== "flash") return;
+        const index = Number(event.key) - 1;
+        const buttons = $$("#flashAnswers .answer-button");
+        if (index >= 0 && index < Math.min(4, buttons.length)) buttons[index].click();
+      });
+
+      renderWordButtons();
+      renderToggles();
+      renderFlashQuestion();
+      newCommandQuestion();
+      newCameraQuestion();
+      setupCommandDrag();
+      updateScore();
+      updateCameraProgress();
+      showPhase("engage");
+    })();
+  </script>
+</body>
+</html>
